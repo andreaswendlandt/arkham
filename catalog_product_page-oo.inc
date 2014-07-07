@@ -22,12 +22,12 @@ echo "</tr>";
 for ($i=$n_start;$i<=$n_end;$i++)
 {
 	echo "<tr>";
-	echo "td align='center'>{$all[$i]->katalog_nr}</td>\n";
-	echo "td align='center'>{$all[$i]->name}</td>\n";
-	echo "td align='center'>{$all[$i]->fabrikat}</td>\n";
-	echo "td align='center'>{$all[$i]->best_nr}</td>\n";
-	echo "td align='center'>Euro {$all[$i]->preis}</td>\n";
-	echo "td align='center'>{$all[$i]->pr_beschr}</td>\n";
+	echo "<td align='center'>{$all[$i]->katalog_nr}</td>\n";
+	echo "<td align='center'>{$all[$i]->name}</td>\n";
+	echo "<td align='center'>{$all[$i]->fabrikat}</td>\n";
+	echo "<td align='center'>{$all[$i]->best_nr}</td>\n";
+	echo "<td align='center'>Euro {$all[$i]->preis}</td>\n";
+	echo "<td align='center'>{$all[$i]->pr_beschr}</td>\n";
 	echo "</tr>";
 }
 echo "<form action='$_SERVER[PHP_SELF]' method='POST'>";
