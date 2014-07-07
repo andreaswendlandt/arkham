@@ -12,7 +12,7 @@ class Catalog
 
 	function __construct($filename)
 	{
-		if(is_string($filename));
+		if(is_string($filename))
 		{
 			include("$filename");
 		}
@@ -20,7 +20,7 @@ class Catalog
 		{
 			throw new Exception("Parameter ist kein Parameter");
 		}
-		$this->cxn = new mysqli($host, $user$, $passwd);
+		$this->cxn = new mysqli($host, $user, $passwd);
 		if(mysqli_connect_errno())
 		{
 			throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
