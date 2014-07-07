@@ -9,8 +9,7 @@
 <?php
 /* Text vor dem Formular anzeigen */
 	echo "<div style='margin-left: .1in'>
-	<h1 align='center'> {$page['top']}</h1><hr>";
-
+	<h1 align='center'>{$page['top']}</h1><hr>";
 /* Formular mit Auswahlliste erzeugen */
 echo "<form action='$_SERVER[PHP_SELF]' method='POST'>\n";
 foreach($bau_categories as $key => $subarray)	#16
@@ -29,5 +28,5 @@ echo "<p><input type='submit' name='Products'
       </form></div>\n";
 ?>
 <hr><p align='center'><font size="-1">
-	<?php echo$page['bottom'] ?></font></p>
+	<?php echo $page['bottom'] ?></font></p>
 </body></html>

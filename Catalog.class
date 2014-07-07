@@ -9,7 +9,6 @@ class Catalog
 	private $host;
 	private $user;
 	private $password;
-
 	function __construct($filename)
 	{
 		if(is_string($filename))
@@ -18,9 +17,9 @@ class Catalog
 		}
 		else
 		{
-			throw new Exception("Parameter ist kein Parameter");
+			throw new Exception("Parameter ist kein Dateiname");
 		}
-		$this->cxn = new mysqli($host, $user, $passwd);
+		$this->cxn = new mysqli($host,$user,$password);
 		if(mysqli_connect_errno())
 		{
 			throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
@@ -28,9 +27,8 @@ class Catalog
 		}
 		$this->host = $host;
 		$this->user = $user;
-		$this->password = $passwd;
+		$this->password = $password;
 	}
-
 	function selectCatalog($database)
 	{
 		$db = $this->cxn->select_db($database);
@@ -61,9 +59,8 @@ class Catalog
 		{
 			$array_cat_type[$row['kateins']][]=$row['katzwei'];
 		}
-		return $arra_cat_type;
+		return $array_cat_type;
 	}
-
 	function getAllofType($type)
 	{
 		if(is_string($type))
@@ -72,7 +69,7 @@ class Catalog
 		}
 		else
 		{
-			throw new Exception("$type ist kein Typ");
+			throw new Exception("$type ist kein Typ.");
 			exit();
 		}
 		if(!$result = $this->cxn->query($sql))
@@ -88,14 +85,12 @@ class Catalog
 		}
 		return $array_all;
 	}
-
 	function displayCategories()
 	{
 		$bau_categories = $this->getCategoriesAndTypes();
 		include("fields_index_page.inc");
 		include("catalog_index_page.inc");
 	}
-	
 	function displayAllofType($type,$page)
 	{
 		if(is_string($type))

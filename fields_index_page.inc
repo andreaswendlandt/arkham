@@ -5,7 +5,7 @@
  */
 $page = array( "title" => "Baumarkt",
 	       "top"   => "Baumarkt",
-	       "bottom" => "Bei Fragen und Anregungen wende Sie sich an admin@heimwerker.de",
+	       "bottom" => "Bei Fragen und Anregungen wenden Sie sich an admin@heimwerker.de",
 	     );
 ?>
 
