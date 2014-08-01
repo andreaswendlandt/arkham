@@ -1,11 +1,11 @@
 <?php
 /* Klasse: Holiday
- * Zweck: Klasse, die die Produktdaten enthaelt
+ * Zweck: Klasse, die sämtliche benötigten Daten generiert
  */
 class Holiday
 {
-	private $cxn;
-	private $catalog_name;
+	private $conn;
+	private $db_name;
 	private $host;
 	private $user;
 	private $password;
@@ -19,7 +19,7 @@ class Holiday
 		{
 			throw new Exception("Parameter ist kein Dateiname");
 		}
-		$this->cxn = new mysqli($host,$user,$password);
+		$this->conn = new mysqli($host,$user,$password);
 		if(mysqli_connect_errno())
 		{
 			throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
@@ -31,10 +31,10 @@ class Holiday
 	}
 	function selectCatalog($database)
 	{
-		$db = $this->cxn->select_db($database);
-		if(mysqli_errno($this->cxn))
+		$db = $this->conn->select_db($database);
+		if(mysqli_errno($this->conn))
 		{
-			if(mysqli_errno($this->cxn) == 1049)
+			if(mysqli_errno($this->conn) == 1049)
 			{
 				throw new Exception("$database existiert nicht.");
 				exit();
@@ -45,14 +45,14 @@ class Holiday
 				exit();
 			}
 		}
-		$this->catalog_name = $database;
+		$this->db_name = $database;
 	}
 	function getCategoriesAndTypes()
 	{
 		$sql = "SELECT DISTINCT kontinent FROM urlaubsziele ORDER BY kontinent,land";
-		if(!$result = $this->cxn->query($sql))
+		if(!$result = $this->conn->query($sql))
 		{
-			throw new Exception(mysqli_error($this->cxn));
+			throw new Exception(mysqli_error($this->conn));
 			exit();
 		}
 		while($row=$result->fetch_array())
@@ -72,9 +72,9 @@ class Holiday
 			throw new Exception("$type ist kein Typ.");
 			exit();
 		}
-		if(!$result = $this->cxn->query($sql))
+		if(!$result = $this->conn->query($sql))
 		{
-			throw new Exception(mysqli_error($this->cxn));
+			throw new Exception(mysqli_error($this->conn));
 			exit();
 		}
 		$n=1;
