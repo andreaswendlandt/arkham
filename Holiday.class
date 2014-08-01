@@ -1,8 +1,8 @@
 <?php
-/* Klasse: Catalog
+/* Klasse: Holiday
  * Zweck: Klasse, die die Produktdaten enthaelt
  */
-class Catalog
+class Holiday
 {
 	private $cxn;
 	private $catalog_name;
@@ -49,7 +49,7 @@ class Catalog
 	}
 	function getCategoriesAndTypes()
 	{
-		$sql = "SELECT DISTINCT kontinent,land FROM urlaubsziele ORDER BY kontinent,land";
+		$sql = "SELECT DISTINCT kontinent FROM urlaubsziele ORDER BY kontinent,land";
 		if(!$result = $this->cxn->query($sql))
 		{
 			throw new Exception(mysqli_error($this->cxn));
@@ -65,7 +65,7 @@ class Catalog
 	{
 		if(is_string($type))
 		{
-			$sql = "SELECT * FROM urlaubsziele WHERE land='$type' ORDER BY hotel";
+			$sql = "SELECT * FROM urlaubsziele WHERE kontinent='$type' ORDER BY hotel";
 		}
 		else
 		{
@@ -90,7 +90,7 @@ class Catalog
 		$continent = $this->getCategoriesAndTypes();
 		include("first_site.inc");
 	}
-	function displayAllofType($type,$site)
+	function displayAllofType($type)
 	{
 		if(is_string($type))
 		{	
@@ -101,37 +101,10 @@ class Catalog
 			throw new Exception("$type ist kein Typ.");
 			exit();
 		}
-		if(is_int($site))
-		{
-			$n_per_page = $site;
-		}
-		else
-		{
-			throw new Exception("$site ist nicht Integer.");
-			exit();
-		}
-		$n_products = sizeof($all);
-		if(isset($_POST['n_end']))
-		{
-			if($_POST['Products'] == "Vorherige")
-			{
-				$n_start = $_POST['n_end']-($n_per_page);
-			}
-			else
-			{
-				$n_start = $_POST['n_end'] + 1;
-			}
-		}
-	else
-	{
-		$n_start = 1;
-	}
-	$n_end = $n_start + $n_per_page -1;
-	if($n_end >= $n_products)
-	{
-		$n_end = $n_products;
-	}
-	include("second_site.inc");
+		$n_destination = sizeof($all);
+			$n_start = 1;
+			$n_end = $n_destination;
+		include("second_site.inc");
 	}
 }
 ?>
