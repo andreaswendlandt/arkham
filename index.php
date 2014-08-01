@@ -1,14 +1,14 @@
 <?php
 /* Datei: index.php
- * Zweck: Zeigt einen Katalog an. Dieser besteht aus
+ * Zweck: Zeigt einen Katalog an, dieser besteht aus
  *        zwei verschiedenen Seiten: einer Indexseite
- *	  mit Kategorien und einer Produktseite, 
- *        die nach Auswahl einer Kategorie angezeigt wird.
+ *	  mit möglichen Kontinenten zum auswählen und der zweiten Seite 
+ *        die nach Auswahl eines Kontinents mögliche Reiseziele anzeigt.
  */
 require_once("Holiday.class");
-if(isset($_POST['Products']))
+if(isset($_POST['Destination']))
 {
-	if(!isset($_POST['interest']))
+	if(!isset($_POST['desire']))
 	{
 		header("location: index.php");
 		exit();
@@ -17,13 +17,13 @@ if(isset($_POST['Products']))
 	{
 		try
 		{
-			$holidaycatalog = new Catalog("credentials.inc");
+			$holidaycatalog = new Holiday("credentials.inc");
 			$holidaycatalog->selectCatalog("urlaub");
-			$holidaycatalog->displayAllofType($_POST['interest'],2);
+			$holidaycatalog->displayAllofType($_POST['desire']);
 		}
-		catch(Exception $e)
+		catch(Exception $exception)
 		{
-			echo $e->getMessage();
+			echo $exception->getMessage();
 			exit();
 		}
 	}
@@ -32,13 +32,13 @@ else
 {
 	try
 	{
-		$holidaycatalog = new Catalog("credentials.inc");
+		$holidaycatalog = new Holiday("credentials.inc");
 		$holidaycatalog->selectCatalog("urlaub");
 		$holidaycatalog->displayCategories();
 	}
-	catch(Exception $e)
+	catch(Exception $exception)
 	{
-		echo $e->getMessage();
+		echo $exception->getMessage();
 		exit();
 	}
 }
