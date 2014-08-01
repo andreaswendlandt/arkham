@@ -18,20 +18,15 @@ $site = array( "title" => "Reisekatalog",
         <h1 align='center'>{$site['top']}</h1><hr>";
 /* Formular mit Auswahlliste erzeugen */
 echo "<form action='$_SERVER[PHP_SELF]' method='POST'>\n";
+echo "<select name='desire'>";
 foreach($continent as $key => $subarray)
 {
         $key=htmlentities($key);
-        echo "<h3>$key</h3>";
-        echo "<ul>";
-        foreach($subarray as $type)
-        {
-                echo "<input type='radio' name='interest'
-                        value='$type'><b>$type</b><br>\n";
-        }
-        echo "</ul>";
+        echo "<option value='$key'>$key</option>";
 }
-echo "<p><input type='submit' name='Products'
-        value='Kategorie w&auml;hlen'>\n
+echo "</select>";
+echo "<p><input type='submit' name='Destination'
+        value='Kontinent w&auml;hlen'>\n
       </form></div>\n";
 ?>
 <hr><p align='center'><font size="-1">
