@@ -1,52 +1,56 @@
 <?php
 /* Datei: second_site.inc
- * Zweck: Definiert Variablen und Arrays für die zweite Seite
- *        und zeigt die gefundenen Hotels an.
+ * Zweck: Zeigt die gefunden Hotels und Länder des gewählten
+ *        Kontinents an
  */
-$site = array( "title" => "Der Reisekatalog",
-               "top"   => "Der Reisekatalog",
-               "bottom" => "Bei Fragen, Anregungen oder Problemen wenden Sie sich an webmaster@urlaub-jetzt.de",
+$site = array( "title"     => "Der Reisekatalog",
+               "top"       => "Der Reisekatalog",
+               "bottom"    => "Bei Fragen, Anregungen oder Problemen wenden Sie sich an webmaster@urlaub-jetzt.de",
+	       "impressum" => "<a href='impressum.html'>Impressum</a>",
              );
-$table_heads = array("hotel"      => "Hotel",
-                     "stadt"   => "Stadt",
-                     "angebot_nr"    => "Angebotsnr.",
-                     "preis"      => "Preis",
-		     "land"	=> "Land",
-                    );
+$caption = array("hotel"      => "Hotel",
+                 "stadt"      => "Stadt",
+                 "angebot_nr" => "Angebotsnr.",
+                 "preis"      => "Preis",
+		 "land"	      => "Land",
+                 );
 ?>
 <html>
-<head><title>Der Reisekatalog</title></head>
+<head>
+<title>Der Reisekatalog</title></head>
 <body>
 <?php
-echo "<div style='margin-left: .1in; margin-right: .1in'>
-      <h1 align='center'>Der Reisekatalog</h1><hr>
-      <p><font size='+2'><b>{$_POST['desire']}</b></font></p>";
-//echo "<p align='right'>($n_destination Produkt(e) gefunden)</p><hr>";
+echo "<div style='margin-left: .1in; margin-right: .1in'>";
+echo "<h1 align='center'>Der Reisekatalog</h1><hr>";
+echo "<p><font size='+2'><b>{$_POST['desire']}</b></font></p>";
 echo "<table border = '0' cellpadding = '3' width = '100%'>";
 echo "<tr>";
-foreach($table_heads as $heading)
+foreach($caption as $heading)
 {
         echo "<th>$heading</th>";
 }
 echo "</tr>";
-for ($i=$n_start;$i<=$n_end;$i++)
+for ($n=$n_start;$n<=$n_end;$n++)
 {
         echo "<tr>";
-        echo "<td align='center'>{$all[$i]->hotel}</td>\n";
-        echo "<td align='center'>{$all[$i]->stadt}</td>\n";
-        echo "<td align='center'>{$all[$i]->angebot_nr}</td>\n";
-        echo "<td align='center'>{$all[$i]->preis} Euro</td>\n";
-        echo "<td align='center'>{$all[$i]->land}</td>\n";
+        echo "<td align='center'>{$all[$n]->hotel}</td>\n";
+        echo "<td align='center'>{$all[$n]->stadt}</td>\n";
+        echo "<td align='center'>{$all[$n]->angebot_nr}</td>\n";
+        echo "<td align='center'>{$all[$n]->preis} Euro</td>\n";
+        echo "<td align='center'>{$all[$n]->land}</td>\n";
         echo "</tr>";
 }
 echo "<form action='$_SERVER[PHP_SELF]' method='POST'>";
 echo "<input type='hidden' name='n_end' value='$n_end'>";
 echo "<input type='hidden' name='desire' value='$_POST[desire]'>";
-echo "<tr>
-      <td colspan='2'>
-      <input type='submit' value='Anderen Kontinent w&auml;hlen'></td>
-      <td colspan='3' align='right'>";
-echo " </td></form></tr></table></div>";
-echo "<hr><p style='text-align: center; font-size: 75%'>{$site['bottom']}";
+echo "<tr>";
+echo "<td colspan='2'>";
+echo "<input type='submit' value='Anderen Kontinent w&auml;hlen'></td>";
+echo "<td colspan='3' align='right'>";
+echo "</td></form></tr></table></div>";
+echo "<hr>";
+echo "<p style='text-align: right; font-size: -1'>{$site['bottom']}";
+echo "<p style='text-align: left; font-size: -1'>{$site['impressum']}";
 ?>
-</body></html>
+</body>
+</html>
