@@ -17,9 +17,10 @@ if(isset($_POST['Destination']))
 	{
 		try
 		{
-			$holidaycatalog = new Holiday("credentials.inc");
+			$holidaycatalog = new Holiday;
+			$holidaycatalog->connectHost("credentials.inc");
 			$holidaycatalog->selectDatabase("urlaub");
-			$holidaycatalog->displayAllofType($_POST['desire']);
+			$holidaycatalog->displayContinentData($_POST['desire']);
 		}
 		catch(Exception $exception)
 		{
@@ -32,9 +33,10 @@ else
 {
 	try
 	{
-		$holidaycatalog = new Holiday("credentials.inc");
+		$holidaycatalog = new Holiday;
+		$holidaycatalog->connectHost("credentials.inc");
 		$holidaycatalog->selectDatabase("urlaub");
-		$holidaycatalog->displayCategories();
+		$holidaycatalog->displayContinents();
 	}
 	catch(Exception $exception)
 	{
