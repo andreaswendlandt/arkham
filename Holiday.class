@@ -34,22 +34,14 @@ class Holiday
 		$db = $this->conn->select_db($database);
 		if(mysqli_errno($this->conn))
 		{
-			if(mysqli_errno($this->conn) == 1049)
-			{
-				throw new Exception("$database existiert nicht.");
-				exit();
-			}
-			else
-			{
-				throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
-				exit();
-			}
+			throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
+			exit();
 		}
 		$this->db_name = $database;
 	}
-	function getCategoriesAndTypes()
+	function getContinents()
 	{
-		$sql = "SELECT DISTINCT kontinent FROM urlaubsziele ORDER BY kontinent,land";
+		$sql = "SELECT DISTINCT kontinent FROM urlaubsziele ORDER BY kontinent";
 		if(!$result = $this->conn->query($sql))
 		{
 			throw new Exception(mysqli_error($this->conn));
@@ -87,7 +79,7 @@ class Holiday
 	}
 	function displayCategories()
 	{
-		$continent = $this->getCategoriesAndTypes();
+		$continent = $this->getContinents();
 		include("first_site.inc");
 	}
 	function displayAllofType($type)
