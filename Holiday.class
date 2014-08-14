@@ -9,11 +9,11 @@ class Holiday
 	private $host;
 	private $user;
 	private $password;
-	function __construct($filename)
+	function __construct($credential_file)
 	{
-		if(is_string($filename))
+		if(is_string($credential_file))
 		{
-			include("$filename");
+			include("$credential_file");
 		}
 		else
 		{
