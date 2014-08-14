@@ -29,7 +29,7 @@ class Holiday
 		$this->user = $user;
 		$this->password = $password;
 	}
-	function selectCatalog($database)
+	function selectDatabase($database)
 	{
 		$db = $this->conn->select_db($database);
 		if(mysqli_errno($this->conn))
