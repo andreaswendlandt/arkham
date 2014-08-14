@@ -13,9 +13,8 @@ $site = array( "title"     => "Reisekatalog",
 <head>
 <title><?php echo $site['title'] ?></title>
 </head>
-<body>
+<body style="background-color:#CCFFFF" text="#191970">
 <?php
-echo "<div style='margin-left: .1in'>";
 echo "<h1 align='center'>{$site['top']}</h1><hr>";
 echo "<form action='$_SERVER[PHP_SELF]' method='POST'>\n";
 echo "<select name='desire'>";
@@ -27,11 +26,17 @@ foreach($continent as $key => $subarray)
 echo "</select>";
 echo "<p><input type='submit' name='Destination'";
 echo "value='Kontinent w&auml;hlen'>\n";
-echo "</form></div>\n";
+echo "</form>";
 ?>
-<hr><p align='right'><font size="-1">
-<?php echo $site['bottom'] ?></font></p>
-<p align='left'><font size="-1">
-<?php echo $site['impressum'] ?></font></p>
+<hr>
+<p align='right'><font size="-1">
+<?php echo $site['bottom'] ?>
+</font>
+</p>
+<p align='left'>
+<font size="-1">
+<?php echo $site['impressum'] ?>
+</font>
+</p>
 </body>
 </html>
