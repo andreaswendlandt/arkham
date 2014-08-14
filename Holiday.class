@@ -9,20 +9,13 @@ class Holiday
 	private $host;
 	private $user;
 	private $password;
-	function __construct($credential_file)
+	function connectHost($credential_file)
 	{
-		if(is_string($credential_file))
-		{
-			include("$credential_file");
-		}
-		else
-		{
-			throw new Exception("Parameter ist kein Dateiname");
-		}
+		include("$credential_file");
 		$this->conn = new mysqli($host,$user,$password);
 		if(mysqli_connect_errno())
 		{
-			throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
+			throw new Exception("Datenbank nicht verf&uuml;gbar, kontaktieren Sie bitte den Administrator dieser Seite");
 			exit();
 		}
 		$this->host = $host;
@@ -34,7 +27,7 @@ class Holiday
 		$db = $this->conn->select_db($database);
 		if(mysqli_errno($this->conn))
 		{
-			throw new Exception("Datenbank nicht verf&uuml;gbar, versuchen Sie es sp&auml;ter erneut");
+			throw new Exception("Datenbank nicht verf&uuml;gbar, kontaktieren Sie bitte den Administrator dieser Seite");
 			exit();
 		}
 		$this->db_name = $database;
@@ -49,21 +42,13 @@ class Holiday
 		}
 		while($row=$result->fetch_array())
 		{
-			$array_cat_type[$row['kontinent']][]=$row['land'];
+			$array_continent[$row['kontinent']][]=$row['land'];
 		}
-		return $array_cat_type;
+		return $array_continent;
 	}
-	function getAllofType($type)
+	function getAllHotels($type)
 	{
-		if(is_string($type))
-		{
-			$sql = "SELECT * FROM urlaubsziele WHERE kontinent='$type' ORDER BY hotel";
-		}
-		else
-		{
-			throw new Exception("$type ist kein Typ.");
-			exit();
-		}
+		$sql = "SELECT * FROM urlaubsziele WHERE kontinent='$type' ORDER BY hotel";
 		if(!$result = $this->conn->query($sql))
 		{
 			throw new Exception(mysqli_error($this->conn));
@@ -77,25 +62,17 @@ class Holiday
 		}
 		return $array_all;
 	}
-	function displayCategories()
+	function displayContinents()
 	{
 		$continent = $this->getContinents();
 		include("first_site.inc");
 	}
-	function displayAllofType($type)
+	function displayContinentData($type)
 	{
-		if(is_string($type))
-		{	
-			$all = $this->getAllofType($type);
-		}
-		else
-		{
-			throw new Exception("$type ist kein Typ.");
-			exit();
-		}
+		$all = $this->getAllHotels($type);
 		$n_destination = sizeof($all);
-			$n_start = 1;
-			$n_end = $n_destination;
+		$n_start = 1;
+		$n_end = $n_destination;
 		include("second_site.inc");
 	}
 }
