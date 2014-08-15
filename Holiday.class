@@ -1,7 +1,4 @@
 <?php
-/* Klasse: Holiday
- * Zweck: Klasse, die sämtliche benötigten Daten generiert
- */
 class Holiday
 {
 	private $conn;
@@ -32,7 +29,7 @@ class Holiday
 		}
 		$this->db_name = $database;
 	}
-	function getContinents()
+	function fetchContinents()
 	{
 		$sql = "SELECT DISTINCT kontinent FROM urlaubsziele ORDER BY kontinent";
 		if(!$result = $this->conn->query($sql))
@@ -46,7 +43,7 @@ class Holiday
 		}
 		return $array_continent;
 	}
-	function getAllHotels($type)
+	function fetchAllHotels($type)
 	{
 		$sql = "SELECT * FROM urlaubsziele WHERE kontinent='$type' ORDER BY hotel";
 		if(!$result = $this->conn->query($sql))
@@ -62,14 +59,14 @@ class Holiday
 		}
 		return $array_all;
 	}
-	function displayContinents()
+	function showContinents()
 	{
-		$continent = $this->getContinents();
+		$continent = $this->fetchContinents();
 		include("first_site.php");
 	}
-	function displayContinentData($type)
+	function showContinentData($type)
 	{
-		$all = $this->getAllHotels($type);
+		$all = $this->fetchAllHotels($type);
 		$n_destination = sizeof($all);
 		$n_start = 1;
 		$n_end = $n_destination;
