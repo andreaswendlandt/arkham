@@ -14,7 +14,7 @@ if(isset($_POST['Destination']))
 			$holidaycatalog = new Holiday;
 			$holidaycatalog->connectHost("credentials.php");
 			$holidaycatalog->selectDatabase("urlaub");
-			$holidaycatalog->displayContinentData($_POST['desire']);
+			$holidaycatalog->showContinentData($_POST['desire']);
 		}
 		catch(Exception $exception)
 		{
@@ -30,7 +30,7 @@ else
 		$holidaycatalog = new Holiday;
 		$holidaycatalog->connectHost("credentials.php");
 		$holidaycatalog->selectDatabase("urlaub");
-		$holidaycatalog->displayContinents();
+		$holidaycatalog->showContinents();
 	}
 	catch(Exception $exception)
 	{
