@@ -1,10 +1,4 @@
 <?php
-/* Datei: index.php
- * Zweck: Zeigt einen Katalog an, dieser besteht aus
- *        zwei verschiedenen Seiten: einer Indexseite
- *	  mit möglichen Kontinenten zum auswählen und der zweiten Seite 
- *        die nach Auswahl eines Kontinents mögliche Reiseziele anzeigt.
- */
 require_once("Holiday.class");
 if(isset($_POST['Destination']))
 {
@@ -18,7 +12,7 @@ if(isset($_POST['Destination']))
 		try
 		{
 			$holidaycatalog = new Holiday;
-			$holidaycatalog->connectHost("credentials.inc");
+			$holidaycatalog->connectHost("credentials.php");
 			$holidaycatalog->selectDatabase("urlaub");
 			$holidaycatalog->displayContinentData($_POST['desire']);
 		}
@@ -34,7 +28,7 @@ else
 	try
 	{
 		$holidaycatalog = new Holiday;
-		$holidaycatalog->connectHost("credentials.inc");
+		$holidaycatalog->connectHost("credentials.php");
 		$holidaycatalog->selectDatabase("urlaub");
 		$holidaycatalog->displayContinents();
 	}
