@@ -65,7 +65,7 @@ class Holiday
 	function displayContinents()
 	{
 		$continent = $this->getContinents();
-		include("first_site.inc");
+		include("first_site.php");
 	}
 	function displayContinentData($type)
 	{
@@ -73,7 +73,7 @@ class Holiday
 		$n_destination = sizeof($all);
 		$n_start = 1;
 		$n_end = $n_destination;
-		include("second_site.inc");
+		include("second_site.php");
 	}
 }
 ?>
