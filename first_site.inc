@@ -17,6 +17,7 @@ $site = array( "title"     => "Reisekatalog",
 <?php
 echo "<h1 align='center'>{$site['top']}</h1><hr>";
 echo "<form action='$_SERVER[PHP_SELF]' method='POST'>\n";
+echo "<div style='text-align: center'>";
 echo "<select name='desire'>";
 foreach($continent as $key => $subarray)
 {
@@ -26,6 +27,7 @@ foreach($continent as $key => $subarray)
 echo "</select>";
 echo "<p><input type='submit' name='Destination'";
 echo "value='Kontinent w&auml;hlen'>\n";
+echo "</div>";
 echo "</form>";
 ?>
 <hr>
