@@ -24,7 +24,6 @@ foreach($caption as $heading)
         echo "<th>$heading</th>";
 }
 echo "</tr>";
-$n_start = 1;
 while ($n_start <= $n_end)
 {
         echo "<tr>";
