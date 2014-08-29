@@ -24,15 +24,17 @@ foreach($caption as $heading)
         echo "<th>$heading</th>";
 }
 echo "</tr>";
-for ($n=$n_start;$n<=$n_end;$n++)
+$n_start = 1;
+while ($n_start <= $n_end)
 {
         echo "<tr>";
-        echo "<td align='center'>{$all[$n]->hotel}</td>\n";
-        echo "<td align='center'>{$all[$n]->stadt}</td>\n";
-        echo "<td align='center'>{$all[$n]->angebot_nr}</td>\n";
-        echo "<td align='center'>{$all[$n]->preis} Euro</td>\n";
-        echo "<td align='center'>{$all[$n]->land}</td>\n";
+        echo "<td align='center'>{$all[$n_start]->hotel}</td>\n";
+        echo "<td align='center'>{$all[$n_start]->stadt}</td>\n";
+        echo "<td align='center'>{$all[$n_start]->angebot_nr}</td>\n";
+        echo "<td align='center'>{$all[$n_start]->preis} Euro</td>\n";
+        echo "<td align='center'>{$all[$n_start]->land}</td>\n";
         echo "</tr>";
+	$n_start++;
 }
 echo "</table>";
 echo "<br>";
