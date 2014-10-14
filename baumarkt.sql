@@ -26,6 +26,7 @@ CREATE DATABASE IF NOT EXISTS baumarkt;
 --
 -- Tabellenstruktur für Tabelle `bestellung`
 --
+USE baumarkt;
 CREATE TABLE IF NOT EXISTS `bestellung` (
   `bestell_nr` int(6) NOT NULL,
   `bestell_date` date NOT NULL,
