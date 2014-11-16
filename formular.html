@@ -1,19 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
 <title>G&auml;stebuch</title>
-
-Wollen Sie einen Beitrag hinzuf&uuml;gen?<br>
-<!-- <form accept-charset="utf-8" action="eintragen.php" Method="post"> -->
-<form action="eintragen.php" Method="post">
-Ihr Name:<br>
-<input name="name" size="40"><br><br>
-
-E-Mail:<br>
-<input name="email" size="40"><br><br>
-
-
-Inhalt:<br>
-<textarea name="inhalt" cols="40"
- rows="12" wrap="physical"></textarea><br>
-<input type="submit" value="Absenden">
+</head>
+<body>
+<p><h4>Um einen Eintrag ins G&auml;stebuch zu hinterlassen f&uuml;llen Sie bitte ALLE folgenden Werte aus und klicken auf Abschicken</h4></p>
+<form action="insert_gb.php" Method="post">
+<p>Ihr Name:</p>
+<input name="name" size="40">
+<p>Ihre E-Mail Adresse:<br>
+<input name="email" size="40">
+<p>Ihr Eintrag:</p>
+<textarea name="inhalt" cols="46" rows="12" wrap="physical"></textarea>
+<p><input type="submit" value="Abschicken"></p>
 </form>
+</body>
+</html>
+
