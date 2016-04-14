@@ -1,4 +1,5 @@
 #!/bin/bash
+# nmap version 6.40
 
 if [ $# -ne 2 ]; then 
   echo "Error, this script needs 2 parameters, a network and an ipaddress"
@@ -9,7 +10,8 @@ fi
 network="$1"
 ipaddress="$2"
 
-result=$(nmap -sL $network | grep "$ipaddress\>")
+result=$(nmap -v -sP $network | grep -A 1 "$ipaddress\>")
+#result=$(nmap -sL $network | grep "$ipaddress\>")
 echo $result
 
 exit 0
