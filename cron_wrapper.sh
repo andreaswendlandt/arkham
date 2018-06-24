@@ -22,7 +22,6 @@ for i in $*; do
     if [ $i -ne 0 ]; then
         error="$error $j.command"
     fi
-    #echo "$j.Parameter: $i"
     j=$((j+1))
 done
 
