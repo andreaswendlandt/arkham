@@ -1,0 +1,27 @@
+#CRONGUARD
+
+*client
+**cronwrapper
+ - script cron_wrapper.sh
+  - meldet sich bei cronguard per curl und meldet den start eines cronjobs, das ende und den erfolg
+  - dependency: curl
+
+*server
+**datenbankmodell (mysql)
+  - mysql table scheme:
+      token(char 6)
+      host(varchar 30)
+      start_time(int 30)
+      end_time(int 30)
+      command(varchar 300)
+      action(varchar 8)
+      result(varchar 7)
+  - dependency: ein laufender mysql server oder eine verbindung zu einem solchen
+
+**api
+ - php anwendung cron.php
+  - schreibt in die datenbank die werte die es vom client - also cron_wrapper.sh bekommt
+  - dependency: ein laufender webserver mit php
+
+**cronguard daemon
+ - wertet die datenbank einträge aus und benachrichtigt bei fehlerhaften cronjobs(eventuell nagios schnittstelle)
