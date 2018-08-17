@@ -4,18 +4,25 @@ $username = "cronguard";
 $password = "egal";
 $dbname = "cronguard";
 
-//echo "$_POST['token']\n";
-//echo "$_POST['host']\n";
 
-if (isset($_POST['token']) && isset($_POST['host'])) {
+if (isset($_POST['action'])) {
+    $action = $_POST['action'];
+}
+else {
+    die("Something went wrong with the data transmission\n");
+}
+
+if (isset($_POST['token']) && isset($_POST['host']) && isset($_POST['start_time']) && isset($_POST['command'])) {
     $token = $_POST['token'];
-    $host = $_POST['host'];    
+    $host = $_POST['host'];
+    $start_time = $_POST['start_time'];
+    $command = $_POST['command'];
 }
 else {  
-    echo "no data retrieved\n";
+    die("no data retrieved\n");
 }
-echo "$token\n";
-echo "$host\n";
+//echo "$token\n";
+//echo "$host\n";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
