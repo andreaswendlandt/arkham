@@ -25,6 +25,9 @@
  - php anwendung cron.php
   - schreibt in die datenbank die werte die es vom client - also cron_wrapper.sh bekommt
   - dependency: ein laufender webserver mit php
+ - php script db.inc.php
+  - wird von cron.php benötigt
+  - stellt die datenbankverbindung her
 
 **cronguard daemon
  - wertet die datenbank einträge aus und benachrichtigt bei fehlerhaften cronjobs(eventuell nagios schnittstelle)
