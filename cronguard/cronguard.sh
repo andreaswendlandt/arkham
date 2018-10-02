@@ -9,7 +9,8 @@ daemon="cronguard"
 pidfile="/var/run/cronguard.pid"
 logfile="/var/log/cronguard.log"
 pid="$$"
-runInterval=60 # In seconds
+runInterval=60 
+
 log() {
     echo $(date) "$@" >>$logfile
 }
@@ -36,14 +37,16 @@ start_cronguard() {
 
 stop_cronguard() {
     if [ $(check_cronguard) -eq 0 ]; then
-        echo "Error: $daemon is not running."
+        echo "Error: $daemon is not running"
         exit 1
     fi
     echo "Stopping $daemon"
     log "Stopping $daemon"
-
     if [ -s $pidfile ]; then
         kill -9 $(cat "$pidfile") >/dev/null 2>&1
+    else
+        echo "Error: Could not stop $daemon, please check manually!"
+        log "Error: Could not stop $daemon, please check manually!"
     fi
 }
 
@@ -51,47 +54,47 @@ status_cronguard() {
     if [ $(check_cronguard -eq 1 ]; then
         echo "$daemon is running"
     else
-      echo "$daemon is not running"
+        echo "$daemon is not running"
     fi
     exit 0
 }
 
-restart_crongurad() {
-    if [ $(check_crongurad) -eq 0 ]; then
-        echo "$daemonName is not running"
-        exit 1
+restart_cronguard() {
+    if [ $(check_cronguard) -eq 0 ]; then
+        echo "$daemon is not running, starting it"
+	log "Starting $daemon"
+	start_cronguard
+#fixme leave this function here
     fi
+    echo "Restarting $daemon"
+    log "Restarting $daemon"
     stop_cronguard
     start_cronguard
 }
 
-checkDaemon() {
-  # Check to see if the daemon is running.
-  # This is a different function than statusDaemon
-  # so that we can use it other functions.
-  if [ -z "$oldPid" ]; then
-    return 0
-  elif [[ `ps aux | grep "$oldPid" | grep -v grep` > /dev/null ]]; then
-    if [ -f "$pidFile" ]; then
-      if [[ `cat "$pidFile"` = "$oldPid" ]]; then
-        # Daemon is running.
-        # echo 1
-        return 1
-      else
-        # Daemon isn't running.
+check_cronguard() {
+    if [ -z "$oldPid" ]; then
         return 0
-      fi
+    elif ps -ef | grep "$oldPid" | grep -v grep > /dev/null 2>&1; then
+        if [ -f "$pidFile" ]; then
+            if [[ `cat "$pidFile"` = "$oldPid" ]]; then
+            # Daemon is running.
+                return 1
+            else
+            # Daemon isn't running.
+            return 0
+            fi
+        fi
+    elif [[ `ps aux | grep "$daemonName" | grep -v grep | grep -v "$myPid" | grep -v "0:00.00"` > /dev/null ]]; then
+        # Daemon is running but without the correct PID. Restart it.
+        log '*** '`date +"%Y-%m-%d"`": $daemonName running with invalid PID; restarting."
+        restartDaemon
+        return 1
+    else
+        # Daemon not running.
+        return 0
     fi
-  elif [[ `ps aux | grep "$daemonName" | grep -v grep | grep -v "$myPid" | grep -v "0:00.00"` > /dev/null ]]; then
-    # Daemon is running but without the correct PID. Restart it.
-    log '*** '`date +"%Y-%m-%d"`": $daemonName running with invalid PID; restarting."
-    restartDaemon
     return 1
-  else
-    # Daemon not running.
-    return 0
-  fi
-  return 1
 }
 
 loop() {
