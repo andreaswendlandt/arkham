@@ -64,7 +64,7 @@ restart_cronguard() {
         echo "$daemon is not running, starting it"
 	log "Starting $daemon"
 	start_cronguard
-#fixme leave this function here
+        return 2
     fi
     echo "Restarting $daemon"
     log "Restarting $daemon"
@@ -73,28 +73,23 @@ restart_cronguard() {
 }
 
 check_cronguard() {
-    if [ -z "$oldPid" ]; then
-        return 0
-    elif ps -ef | grep "$oldPid" | grep -v grep > /dev/null 2>&1; then
-        if [ -f "$pidFile" ]; then
-            if [[ `cat "$pidFile"` = "$oldPid" ]]; then
-            # Daemon is running.
-                return 1
-            else
-            # Daemon isn't running.
-            return 0
+    if ps -ef | grep "$daemon" | grep -v grep > /dev/null 2>&1; then
+        if ! [ -z "$oldpid" ]; then
+            if [ -f "$pidFile" ]; then
+                if [ $(cat "$pidFile") -eq "$oldpid" ]; then
+                    # Daemon is running.
+                    return 1
+	        else
+                    log "$daemon is running with the wrong PID - restarting $daemon"
+                    restartDaemon
+	            return 1 
+	        fi
             fi
         fi
-    elif [[ `ps aux | grep "$daemonName" | grep -v grep | grep -v "$myPid" | grep -v "0:00.00"` > /dev/null ]]; then
-        # Daemon is running but without the correct PID. Restart it.
-        log '*** '`date +"%Y-%m-%d"`": $daemonName running with invalid PID; restarting."
-        restartDaemon
-        return 1
     else
-        # Daemon not running.
+        # Daemon isn't running.
         return 0
     fi
-    return 1
 }
 
 loop() {
@@ -127,8 +122,8 @@ loop() {
 # Parse the command.
 ################################################################################
 
-if [ -f "$pidFile" ]; then
-  oldPid=`cat "$pidFile"`
+if [ -f "$pidfile" ]; then
+    oldpid=$(cat "$pidfile")
 fi
 checkDaemon
 case "$1" in
@@ -145,8 +140,6 @@ case "$1" in
     restartDaemon
     ;;
   *)
-  echo "\033[31;5;148mError\033[39m: usage $0 { start | stop | restart | status }"
+  echo "Error: Usage $0 {start | stop | restart | status}"
   exit 1
 esac
-
-exit 0
