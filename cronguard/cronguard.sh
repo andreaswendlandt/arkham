@@ -25,18 +25,18 @@ doCommands() {
 ################################################################################
 
 start_cronguard() { 
-    if [ $(check_cronguard) -eq 1 ]; then
+    if [ $(check_cronguard; echo $?) -eq 1 ]; then
         echo "Error: $daemon is already running."
         exit 1
     fi
     echo "Starting $daemon with PID: $pid"
-    echo "$pid" > "$pidFile"
+    echo "$pid" > "$pidfile"
     log "Starting $daemon"
     loop
 }
 
 stop_cronguard() {
-    if [ $(check_cronguard) -eq 0 ]; then
+    if [ $(check_cronguard; echo $?) -eq 0 ]; then
         echo "Error: $daemon is not running"
         exit 1
     fi
@@ -51,7 +51,7 @@ stop_cronguard() {
 }
 
 status_cronguard() {
-    if [ $(check_cronguard -eq 1 ]; then
+    if [ $(check_cronguard; echo $?) -eq 1 ]; then
         echo "$daemon is running"
     else
         echo "$daemon is not running"
@@ -60,7 +60,7 @@ status_cronguard() {
 }
 
 restart_cronguard() {
-    if [ $(check_cronguard) -eq 0 ]; then
+    if [ $(check_cronguard; echo $?) -eq 0 ]; then
         echo "$daemon is not running, starting it"
 	log "Starting $daemon"
 	start_cronguard
@@ -73,18 +73,24 @@ restart_cronguard() {
 }
 
 check_cronguard() {
-    if ps -ef | grep "$daemon" | grep -v grep > /dev/null 2>&1; then
+#	sleep 5
+    if [ -z "$oldpid" ]; then
+        return 0
+    elif ps -ef | grep "$daemon" | grep -v grep > /dev/null 2>&1; then
         if ! [ -z "$oldpid" ]; then
-            if [ -f "$pidFile" ]; then
-                if [ $(cat "$pidFile") -eq "$oldpid" ]; then
+            #if [ -f "$pidFile" ]; then
+                if [ $(cat "$pidfile") -eq "$oldpid" ]; then
                     # Daemon is running.
                     return 1
 	        else
                     log "$daemon is running with the wrong PID - restarting $daemon"
-                    restartDaemon
+                    restart_cronguard
 	            return 1 
 	        fi
-            fi
+            #fi
+	else
+	    # Daemon is running
+	    return 1
         fi
     else
         # Daemon isn't running.
@@ -92,29 +98,37 @@ check_cronguard() {
     fi
 }
 
+#loop() {
+#  # This is the loop.
+#  now=`date +%s`
+#
+#  if [ -z $last ]; then
+#    last=`date +%s`
+#  fi
+#
+#  # Do everything you need the daemon to do.
+#  doCommands
+#
+#  # Check to see how long we actually need to sleep for. If we want this to run
+#  # once a minute and it's taken more than a minute, then we should just run it
+#  # anyway.
+#  last=`date +%s`
+#
+#  # Set the sleep interval
+#  if [[ ! $((now-last+runInterval+1)) -lt $((runInterval)) ]]; then
+#    sleep $((now-last+runInterval))
+#  fi
+#
+#  # Startover
+#  loop
+#}
+
 loop() {
-  # This is the loop.
-  now=`date +%s`
-
-  if [ -z $last ]; then
-    last=`date +%s`
-  fi
-
-  # Do everything you need the daemon to do.
-  doCommands
-
-  # Check to see how long we actually need to sleep for. If we want this to run
-  # once a minute and it's taken more than a minute, then we should just run it
-  # anyway.
-  last=`date +%s`
-
-  # Set the sleep interval
-  if [[ ! $((now-last+runInterval+1)) -lt $((runInterval)) ]]; then
-    sleep $((now-last+runInterval))
-  fi
-
-  # Startover
-  loop
+    while true; do
+        echo "$(date) start" >/home/andreas/testfile
+	sleep 5
+	echo "$(date) stop" >>/home/andreas/testfile
+    done
 }
 
 
@@ -125,19 +139,19 @@ loop() {
 if [ -f "$pidfile" ]; then
     oldpid=$(cat "$pidfile")
 fi
-checkDaemon
+#checkDaemon
 case "$1" in
   start)
-    startDaemon
+    start_cronguard
     ;;
   stop)
-    stopDaemon
+    stop_cronguard
     ;;
   status)
-    statusDaemon
+    status_cronguard
     ;;
   restart)
-    restartDaemon
+    restart_cronguard
     ;;
   *)
   echo "Error: Usage $0 {start | stop | restart | status}"
