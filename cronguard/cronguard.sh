@@ -1,4 +1,7 @@
 #!/bin/bash
+# author: guerillatux
+# desc: 
+# last modified:
 
 if [ "$(id -u)" -ne "0" ]; then
     echo "Error: Cronguard must be run as root"
@@ -20,9 +23,6 @@ doCommands() {
   echo "Running commands."
 }
 
-################################################################################
-# Below is the skeleton functionality of the daemon.
-################################################################################
 
 start_cronguard() { 
     if [ $(check_cronguard; echo $?) -eq 1 ]; then
@@ -64,7 +64,6 @@ restart_cronguard() {
         echo "$daemon is not running, starting it"
 	log "Starting $daemon"
 	start_cronguard
-        return 2
     fi
     echo "Restarting $daemon"
     log "Restarting $daemon"
@@ -73,25 +72,8 @@ restart_cronguard() {
 }
 
 check_cronguard() {
-#	sleep 5
-    if [ -z "$oldpid" ]; then
-        return 0
-    elif ps -ef | grep "$daemon" | grep -v grep > /dev/null 2>&1; then
-        if ! [ -z "$oldpid" ]; then
-            #if [ -f "$pidFile" ]; then
-                if [ $(cat "$pidfile") -eq "$oldpid" ]; then
-                    # Daemon is running.
-                    return 1
-	        else
-                    log "$daemon is running with the wrong PID - restarting $daemon"
-                    restart_cronguard
-	            return 1 
-	        fi
-            #fi
-	else
-	    # Daemon is running
-	    return 1
-        fi
+    if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid" > /dev/null 2>&1; then
+        return 1
     else
         # Daemon isn't running.
         return 0
@@ -132,14 +114,10 @@ loop() {
 }
 
 
-################################################################################
-# Parse the command.
-################################################################################
 
 if [ -f "$pidfile" ]; then
     oldpid=$(cat "$pidfile")
 fi
-#checkDaemon
 case "$1" in
   start)
     start_cronguard
@@ -154,6 +132,6 @@ case "$1" in
     restart_cronguard
     ;;
   *)
-  echo "Error: Usage $0 {start | stop | restart | status}"
+  echo "Error, Usage: $0 start | stop | restart | status"
   exit 1
 esac
