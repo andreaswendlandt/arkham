@@ -12,18 +12,14 @@ daemon="cronguard"
 pidfile="/var/run/cronguard.pid"
 logfile="/var/log/cronguard.log"
 pid="$$"
-runInterval=60 
+interval=7
 
+# Logging
 log() {
     echo $(date) "$@" >>$logfile
 }
 
-doCommands() {
-  # This is where you put all the commands for the daemon.
-  echo "Running commands."
-}
-
-
+# Starting Cronguard
 start_cronguard() { 
     if [ $(check_cronguard; echo $?) -eq 1 ]; then
         echo "Error: $daemon is already running."
@@ -35,6 +31,7 @@ start_cronguard() {
     loop
 }
 
+# Stopping Cronguard
 stop_cronguard() {
     if [ $(check_cronguard; echo $?) -eq 0 ]; then
         echo "Error: $daemon is not running"
@@ -50,6 +47,7 @@ stop_cronguard() {
     fi
 }
 
+# Status of Cronguard
 status_cronguard() {
     if [ $(check_cronguard; echo $?) -eq 1 ]; then
         echo "$daemon is running"
@@ -59,6 +57,7 @@ status_cronguard() {
     exit 0
 }
 
+# Restarting Cronguard
 restart_cronguard() {
     if [ $(check_cronguard; echo $?) -eq 0 ]; then
         echo "$daemon is not running, starting it"
@@ -71,8 +70,10 @@ restart_cronguard() {
     start_cronguard
 }
 
+# Checking Cronguard
 check_cronguard() {
     if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid" > /dev/null 2>&1; then
+        # Daemon is running
         return 1
     else
         # Daemon isn't running.
@@ -80,69 +81,31 @@ check_cronguard() {
     fi
 }
 
-#loop() {
-#  # This is the loop.
-#  now=`date +%s`
-#
-#  if [ -z $last ]; then
-#    last=`date +%s`
-#  fi
-#
-#  # Do everything you need the daemon to do.
-#  doCommands
-#
-#  # Check to see how long we actually need to sleep for. If we want this to run
-#  # once a minute and it's taken more than a minute, then we should just run it
-#  # anyway.
-#  last=`date +%s`
-#
-#  # Set the sleep interval
-#  if [[ ! $((now-last+runInterval+1)) -lt $((runInterval)) ]]; then
-#    sleep $((now-last+runInterval))
-#  fi
-#
-#  # Startover
-#  loop
-#}
-
-################
-#new#
-###############
-do_something(){
-    sleep 8
-    echo "geschlafen"
-}
-
-
-loop(){
-    now=`date +%s`
-    do_something
-    last=`date +%s`
-    result=$((now-last+7))
-    if [  $result -lt 7  -a $result -gt 0 ]; then
-        sleep $((now-last+7))
-    fi
-    echo "fertig"
-    loop
-}
-loop
-#################
-#end_new#
-################
-
-loop() {
-    while true; do
+# Cronguard Functionality
+cronguard(){
         echo "$(date) start" >/home/andreas/testfile
 	sleep 5
 	echo "$(date) stop" >>/home/andreas/testfile
-    done
 }
 
+# Loop
+loop(){
+    now=`date +%s`
+    cronguard
+    last=`date +%s`
+    result=$((now-last+interval))
+    if [ $result -lt $interval -a $result -gt 0 ]; then
+        sleep $((now-last+interval))
+    fi
+    loop
+}
 
-
+# Defining the oldpid variable for checkin purposes
 if [ -f "$pidfile" ]; then
     oldpid=$(cat "$pidfile")
 fi
+
+# Daemon Functionality
 case "$1" in
   start)
     start_cronguard
