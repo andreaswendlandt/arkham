@@ -105,6 +105,31 @@ check_cronguard() {
 #  loop
 #}
 
+################
+#new#
+###############
+do_something(){
+    sleep 8
+    echo "geschlafen"
+}
+
+
+loop(){
+    now=`date +%s`
+    do_something
+    last=`date +%s`
+    result=$((now-last+7))
+    if [  $result -lt 7  -a $result -gt 0 ]; then
+        sleep $((now-last+7))
+    fi
+    echo "fertig"
+    loop
+}
+loop
+#################
+#end_new#
+################
+
 loop() {
     while true; do
         echo "$(date) start" >/home/andreas/testfile
