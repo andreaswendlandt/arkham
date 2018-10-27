@@ -17,11 +17,11 @@ fi
 
 command="$1"
 host=$(hostname)
-token=$(openssl rand -base64 4 | sed -e 's/==//')
+token=$(openssl rand -hex 3)
 start_time=$(date +%s)
 action="start"
 
-curl -X POST -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action "http://localhost/cron.php
+curl -X POST -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" http://localhost/cron.php
 
 eval "$command; "'pipe=${PIPESTATUS[*]}'
 set $pipe
