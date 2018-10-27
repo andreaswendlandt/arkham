@@ -3,20 +3,33 @@
 # desc: 
 # last modified:
 
+# Quit if not called by root
 if [ "$(id -u)" -ne "0" ]; then
     echo "Error: Cronguard must be run as root"
     exit 1
 fi
 
+# Variables
 daemon="cronguard"
 pidfile="/var/run/cronguard.pid"
 logfile="/var/log/cronguard.log"
 pid="$$"
 interval=7
 
+# Config Files
+source db.inc.sh
+source mail.inc.sh
+
 # Logging
 log() {
     echo $(date) "$@" >>$logfile
+}
+
+# Sending Mail
+send_mail(){
+    subject="$1"
+    body="$2"
+    echo "$body" | mail -s "$subject" $mail_to
 }
 
 # Starting Cronguard
