@@ -16,6 +16,11 @@ logfile="/var/log/cronguard.log"
 pid="$$"
 interval=7
 
+# Check if called with sudo (important for checking the processes)
+if  ps -ef | grep $((pid -1)) | grep sudo >/dev/null 2>&1; then 
+    sudo_pid=$((pid -1))
+fi
+
 # Config Files
 source db.inc.sh
 source mail.inc.sh
@@ -85,35 +90,47 @@ restart_cronguard() {
 
 # Checking Cronguard
 check_cronguard() {
-    if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid" > /dev/null 2>&1; then
-        # Daemon is running
-        return 1
+    if [ -z "$sudo_pid" ]; then
+        if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid" > /dev/null 2>&1; then
+            # Daemon is running
+            return 1
+        else
+            # Daemon isn't running.
+            return 0
+        fi
     else
-        # Daemon isn't running.
-        return 0
+        if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid|$sudo_pid" > /dev/null 2>&1; then
+            # Daemon is running
+            return 1
+	else
+            # Daemon isn't running.
+            return 0
+        fi
     fi
 }
 
 # Cronguard Functionality
 cronguard(){
-        echo "$(date) start" >/home/andreas/testfile
-	sleep 5
-	echo "$(date) stop" >>/home/andreas/testfile
+    echo "$(date) start" >/home/andreas/testfile
+    sleep 5
+    echo "$(date) stop" >>/home/andreas/testfile
 }
 
 # Loop
 loop(){
-    now=`date +%s`
+    now=$(date +%s)
     cronguard
-    last=`date +%s`
+    last=$(date +%s)
     result=$((now-last+interval))
     if [ $result -lt $interval -a $result -gt 0 ]; then
-        sleep $((now-last+interval))
+	echo "sleeping for $result seconds" >>/home/andreas/testfile
+        sleep $result
+        #sleep $((now-last+interval))
     fi
     loop
 }
 
-# Defining the oldpid variable for checkin purposes
+# Defining the oldpid variable for checking purposes
 if [ -f "$pidfile" ]; then
     oldpid=$(cat "$pidfile")
 fi
