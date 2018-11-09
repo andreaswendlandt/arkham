@@ -12,6 +12,7 @@ fi
 # Variables
 daemon="cronguard"
 pidfile="/var/run/cronguard.pid"
+init_pidfile="/var/run/cronguard_init.pid"
 logfile="/var/log/cronguard.log"
 pid="$$"
 interval=7
@@ -46,7 +47,9 @@ start_cronguard() {
     echo "Starting $daemon with PID: $pid"
     echo "$pid" > "$pidfile"
     log "Starting $daemon"
-    loop
+    loop &
+    init_pid=$(ps -ef | grep cronguard | grep -v grep | awk '$3 ~ /1/ {print $2}')
+    echo "$init_pid" > "$init_pidfile"
 }
 
 # Stopping Cronguard
@@ -58,10 +61,11 @@ stop_cronguard() {
     echo "Stopping $daemon"
     log "Stopping $daemon"
     if [ -s $pidfile ]; then
-        kill -9 $(cat "$pidfile") >/dev/null 2>&1
+        kill -15 $(cat "$pidfile") >/dev/null 2>&1
+	kill -15 $(cat "$init_pidfile") >/dev/null 2>&1
     else
-        echo "Error: Could not stop $daemon, please check manually!"
-        log "Error: Could not stop $daemon, please check manually!"
+        echo "Error: Can not stop $daemon because $pidfile is empty, please check manually!"
+        log "Error: Can not stop $daemon because $pidfile is empty, please check manually!"
     fi
 }
 
