@@ -22,23 +22,30 @@ if  ps -ef | grep $((pid -1)) | grep sudo >/dev/null 2>&1; then
     sudo_pid=$((pid -1))
 fi
 
-# Config Files
-source db.inc.sh
-source mail.inc.sh
+# Include Config Files
+if ! source /opt/cronguard/db.inc.sh 2>/dev/null; then
+    log "Could not include db.inc.sh from /opt/cronguard, aborting"
+    exit 1
+fi
 
-# Logging
+if ! source /opt/cronguard/mail.inc.sh 2>/dev/null; then
+    log "Could not include mail.inc.sh from /opt/cronguard, aborting"
+    exit 1
+fi
+
+# Logging Function
 log() {
     echo $(date) "$@" >>$logfile
 }
 
-# Sending Mail
+# Sending Mail Function
 send_mail(){
     subject="$1"
     body="$2"
     echo "$body" | mail -s "$subject" $mail_to
 }
 
-# Starting Cronguard
+# Starting Cronguard Function
 start_cronguard() { 
     if [ $(check_cronguard; echo $?) -eq 1 ]; then
         echo "Error: $daemon is already running."
@@ -48,11 +55,9 @@ start_cronguard() {
     echo "$pid" > "$pidfile"
     log "Starting $daemon"
     loop &
-    init_pid=$(ps -ef | grep cronguard | grep -v grep | awk '$3 ~ /1/ {print $2}')
-    echo "$init_pid" > "$init_pidfile"
 }
 
-# Stopping Cronguard
+# Stopping Cronguard Function
 stop_cronguard() {
     if [ $(check_cronguard; echo $?) -eq 0 ]; then
         echo "Error: $daemon is not running"
@@ -60,6 +65,8 @@ stop_cronguard() {
     fi
     echo "Stopping $daemon"
     log "Stopping $daemon"
+    init_pid=$(ps -ef | grep cronguard | grep -v grep | awk '$3 ~ /1/ {print $2}')
+    echo "$init_pid" > "$init_pidfile"
     if [ -s $pidfile ]; then
         kill -15 $(cat "$pidfile") >/dev/null 2>&1
 	kill -15 $(cat "$init_pidfile") >/dev/null 2>&1
@@ -69,7 +76,7 @@ stop_cronguard() {
     fi
 }
 
-# Status of Cronguard
+# Status of Cronguard Function
 status_cronguard() {
     if [ $(check_cronguard; echo $?) -eq 1 ]; then
         echo "$daemon is running"
@@ -79,7 +86,7 @@ status_cronguard() {
     exit 0
 }
 
-# Restarting Cronguard
+# Restarting Cronguard Function
 restart_cronguard() {
     if [ $(check_cronguard; echo $?) -eq 0 ]; then
         echo "$daemon is not running, starting it"
@@ -92,7 +99,7 @@ restart_cronguard() {
     start_cronguard
 }
 
-# Checking Cronguard
+# Checking Cronguard Function
 check_cronguard() {
     if [ -z "$sudo_pid" ]; then
         if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid" > /dev/null 2>&1; then
@@ -113,14 +120,14 @@ check_cronguard() {
     fi
 }
 
-# Cronguard Functionality
+# Cronguard Function
 cronguard(){
     echo "$(date) start" >/home/andreas/testfile
     sleep 5
     echo "$(date) stop" >>/home/andreas/testfile
 }
 
-# Loop
+# Loop Function
 loop(){
     now=$(date +%s)
     cronguard
