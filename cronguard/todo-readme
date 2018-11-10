@@ -31,3 +31,4 @@
 
 **cronguard daemon
  - wertet die datenbank einträge aus und benachrichtigt bei fehlerhaften cronjobs(eventuell nagios schnittstelle)
+ - benötigt das verzeichnis /opt/cronguard, von dort werden zwei config dateien inkludiert (mail.inc.sh und db.inc.sh)
