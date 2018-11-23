@@ -154,6 +154,7 @@ cronguard() {
     else
         log "empty db"
     fi
+    sleep 1
 }
 
 # Loop Function
@@ -163,9 +164,8 @@ loop(){
     last=$(date +%s)
     result=$((now-last+interval))
     if [ $result -lt $interval -a $result -gt 0 ]; then
-	echo "sleeping for $result seconds" >>/home/andreas/testfile
+	echo "$(date) sleeping for $result seconds" >>/home/andreas/testfile
         sleep $result
-        #sleep $((now-last+interval))
     fi
     loop
 }
