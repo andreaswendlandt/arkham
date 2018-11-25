@@ -18,7 +18,7 @@ pid="$$"
 interval=60
 
 # Check if called with sudo (important for checking the processes)
-if  ps -ef | grep $((pid -1)) | grep sudo >/dev/null 2>&1; then 
+if ps -ef | grep $((pid -1)) | grep sudo >/dev/null 2>&1; then 
     sudo_pid=$((pid -1))
 fi
 
