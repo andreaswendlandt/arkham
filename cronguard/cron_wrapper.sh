@@ -1,8 +1,8 @@
 #!/bin/bash
 # author: guerillatux
-# desc: simple wrapper script for cronjobs which have piped commands
-# desc: it notifies the cronguard server via curl the start-/endtime and the result of a script 
-# last modified: 12.08.2018
+# desc: wrapper script for cronjobs whith or without piped commands
+# desc: it notifies the cronguard server via curl about the start-/endtime and the result of a command or script
+# last modified: 1.12.2018
 
 if [ $# -ne 1 ]; then
     echo "This Script needs 1 Parameter, a Command-Chain"
