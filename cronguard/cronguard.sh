@@ -1,7 +1,7 @@
 #!/bin/bash
 # author: guerillatux
-# desc: 
-# last modified:
+# desc: Cronguard Daemon, checks and processes Database Entries, sends Mails and removes them
+# last modified: 1.12.2018
 
 # Quit if not called by root
 if [ "$(id -u)" -ne "0" ]; then
@@ -15,7 +15,7 @@ pidfile="/var/run/cronguard.pid"
 init_pidfile="/var/run/cronguard_init.pid"
 logfile="/var/log/cronguard.log"
 pid="$$"
-interval=60
+interval="60"
 
 # Check if called with sudo (important for checking the processes)
 if ps -ef | grep $((pid -1)) | grep sudo >/dev/null 2>&1; then 
@@ -164,7 +164,6 @@ loop(){
     last=$(date +%s)
     result=$((now-last+interval))
     if [ $result -lt $interval -a $result -gt 0 ]; then
-	echo "$(date) sleeping for $result seconds" >>/home/andreas/testfile
         sleep $result
     fi
     loop
