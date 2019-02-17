@@ -23,7 +23,14 @@ $job = $pheanstalk
   ->reserve();
 
 $cmd = $job->getData(); 
-$output = shell_exec("$cmd");
-echo $output;
+exec($cmd, $output, $return);
+if ($return != 0) {
+    write_log("$cmd could not be processed");
+    echo "$job could not be processed";
+} else {
+    write_log("$cmd succesfully processed");
+    $user_output = implode($output);
+    echo "$user_output\n";
+}
 
 $pheanstalk->delete($job);
