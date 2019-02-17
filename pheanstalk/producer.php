@@ -24,10 +24,14 @@ function put_job($job) {
       ->put("$job");
 }
 
-$jobs = array("echo 'hallo mars' >/tmp/mars; sleep 2;php hallo_mars.php",
-	     "echo 'hallo welt' >/tmp/welt; sleep 2;php hallo_welt.php",
-	     "echo 'hallo venus' >/tmp/venus; sleep 2;php hallo_venus.php"
-            );
+$jobs = array();
+
+$job_file = fopen("jobs.txt", "r");
+
+while (($line = fgets($job_file)) !== false)
+    array_push($jobs, $line);
+
+fclose($job_file);
 
 foreach ($jobs AS $job){
     put_job($job);
