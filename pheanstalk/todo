@@ -1,7 +1,8 @@
 # producer
-- check if job file exist
+- comment
+- check if it is possible to add a newline in exit function
 
 # consumer
 - check if jobs are in the queue
-- process jobs in a loop
-- quit if no jobs are available
+ - process jobs in a loop
+  - quit if no jobs are available
