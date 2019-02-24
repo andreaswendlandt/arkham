@@ -1,11 +1,15 @@
 <?php
 
+// composer pheanstalk
 require 'vendor/autoload.php';
+use Pheanstalk\Pheanstalk;
 
+// check that the script is called by root
 if (posix_getuid() != 0){
-    exit("Error: this script must be run as root!");
+    exit("Error: this script must be run as root!\n");
 }
 
+// write logfile function
 function write_log($content){
     $log_file = "/var/log/job_producer.log";
     $log_time = date('M  j H:i:s');
@@ -16,21 +20,21 @@ function write_log($content){
     fclose($log_handle);
 }
 
+// check that the jobfile is there and has content
 $jobfile = "/var/www/html/php/jobs.txt";
 if (file_exists($jobfile)){
     if(0 == filesize($jobfile)){
 	write_log("jobfile $jobfile exists but is empty - aborting!");
-	exit("ERROR - empty jobfile $jobfile!");
+	exit("ERROR - empty jobfile $jobfile!\n");
     }else{
         write_log("jobfile $jobfile exists and is not empty - proceeding");
     }
 }else{
     write_log("jobfile $jobfile does not exist - aborting!");
-    exit("ERROR - jobfile $jobfile does not exist");
+    exit("ERROR - jobfile $jobfile does not exist\n");
 }
 
-use Pheanstalk\Pheanstalk;
-
+// put job function
 function put_job($job) {
     $pheanstalk = new Pheanstalk('192.168.1.45');
     $pheanstalk
@@ -38,20 +42,22 @@ function put_job($job) {
       ->put("$job");
 }
 
-$jobs = array();
-
+// check that the jobfile is readable and open it for reading
 if ($job_file = @fopen("$jobfile", "r")){
     write_log("jobfile $jobfile opened for reading");
 }else{
     write_log("Could not open jobfile $jobfile for reading");
-    exit("ERROR: Could not open jobfile $jobfile, it seems the file is not readable!");
+    exit("ERROR: Could not open jobfile $jobfile, it seems the file is not readable!\n");
 }
 
-while (($line = fgets($job_file)) !== false)
+// read the jobfile and put all jobs into an array
+$jobs = array();
+while (($line = fgets($job_file)) !== false){
     array_push($jobs, $line);
-
+}
 fclose($job_file);
 
+// put all jobs from the array to the queue
 foreach ($jobs AS $job){
     put_job($job);
     write_log("job \"$job\" put to the queue");
