@@ -1,10 +1,15 @@
 <?php
-require 'vendor/autoload.php';
 
+// composer pheanstalk
+require 'vendor/autoload.php';
+use Pheanstalk\Pheanstalk;
+
+// check that the script is called by root
 if (posix_getuid() != 0){
     exit("Error: this script must be run as root!\n");
 }
 
+// write logfile function
 function write_log($content){
     $log_file = "/var/log/job_consumer.log";
     $log_time = date('M  j H:i:s');
@@ -14,23 +19,22 @@ function write_log($content){
     fclose($log_handle);
 }
 
-use Pheanstalk\Pheanstalk;
+// new pheanstalk object
 $pheanstalk = new Pheanstalk('127.0.0.1');
 
-$job = $pheanstalk
-  ->watch('testtube')
-  ->ignore('default')
-  ->reserve();
-
-$cmd = $job->getData(); 
-exec($cmd, $output, $return);
-if ($return != 0) {
-    write_log("$cmd could not be processed");
-    echo "$job could not be processed";
-} else {
-    write_log("$cmd succesfully processed");
-    $user_output = implode($output);
-    echo "$user_output\n";
+// observe the given tube and process all containing jobs 
+$pheanstalk->watch('testtube');
+while ($job = $pheanstalk->reserve(0)){
+    $cmd = $job->getData(); 
+    exec($cmd, $output, $return);
+    if ($return != 0) {
+        write_log("$cmd could not be processed");
+        echo "$job could not be processed";
+    } else {
+        write_log("$cmd succesfully processed");
+        $user_output = implode($output);
+        echo "$user_output\n";
+        unset($output);
+    }
+    $pheanstalk->delete($job);
 }
-
-$pheanstalk->delete($job);
