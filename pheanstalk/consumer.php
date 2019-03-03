@@ -1,8 +1,17 @@
 <?php
+/* 
+author: andreas wendlandt
+desc: simple script to check if jobs are in a given beanstalkd queue and process them
+desc: in case there are none or all jobs are processed quit
+last modified: 3.3.2019
+*/
 
 // composer pheanstalk
 require 'vendor/autoload.php';
 use Pheanstalk\Pheanstalk;
+
+// include config file
+require_once ("consumer.inc.php");
 
 // check that the script is called by root
 if (posix_getuid() != 0){
@@ -20,10 +29,10 @@ function write_log($content){
 }
 
 // new pheanstalk object
-$pheanstalk = new Pheanstalk('127.0.0.1');
+$pheanstalk = new Pheanstalk($beanstalkd_ip);
 
 // observe the given tube and process all containing jobs 
-$pheanstalk->watch('testtube');
+$pheanstalk->watch($tube);
 while ($job = $pheanstalk->reserve(0)){
     $cmd = $job->getData(); 
     exec($cmd, $output, $return);
