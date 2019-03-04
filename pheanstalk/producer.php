@@ -1,8 +1,17 @@
 <?php
+/*
+author: andreas wendlandt
+desc: simple script to read jobs/tasks from a textfile (jobfile.txt)
+desc: and put every one of them to a beanstalkd queue
+last modified: 4.3.2019
+*/
 
 // composer pheanstalk
 require 'vendor/autoload.php';
 use Pheanstalk\Pheanstalk;
+
+// include config file
+require_once ("producer.inc.php");
 
 // check that the script is called by root
 if (posix_getuid() != 0){
@@ -21,7 +30,6 @@ function write_log($content){
 }
 
 // check that the jobfile is there and has content
-$jobfile = "/var/www/html/php/jobs.txt";
 if (file_exists($jobfile)){
     if(0 == filesize($jobfile)){
 	write_log("jobfile $jobfile exists but is empty - aborting!");
@@ -36,9 +44,11 @@ if (file_exists($jobfile)){
 
 // put job function
 function put_job($job) {
-    $pheanstalk = new Pheanstalk('192.168.1.45');
+    global $beanstalkd_ip;
+    global $tube;
+    $pheanstalk = new Pheanstalk($beanstalkd_ip);
     $pheanstalk
-      ->useTube('testtube')
+      ->useTube($tube)
       ->put("$job");
 }
 
