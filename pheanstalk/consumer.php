@@ -3,7 +3,7 @@
 author: andreas wendlandt
 desc: simple script to check if jobs are in a given beanstalkd queue and process them
 desc: in case there are none or all jobs are processed quit
-last modified: 3.3.2019
+last modified: 4.3.2019
 */
 
 // composer pheanstalk
@@ -41,7 +41,7 @@ while ($job = $pheanstalk->reserve(0)){
         echo "$job could not be processed";
     } else {
         write_log("$cmd succesfully processed");
-        $user_output = implode($output);
+        $user_output = implode("\n",$output);
         echo "$user_output\n";
         unset($output);
     }
