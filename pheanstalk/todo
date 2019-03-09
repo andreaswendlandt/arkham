@@ -1,6 +1,0 @@
-# producer
-
-# consumer
-- check if jobs are in the queue
- - process jobs in a loop
-  - quit if no jobs are available
