@@ -23,6 +23,7 @@ function write_log($content){
     $log_file = "/var/log/job_consumer.log";
     $log_time = date('M  j H:i:s');
     $log_handle = fopen($log_file, 'a') or die('Can not open:' .$log_file);
+    $content = str_replace(array("\n", "\r"), '', $content);
     $log_content = "$log_time  $content\n";
     fwrite($log_handle, $log_content);
     fclose($log_handle);
