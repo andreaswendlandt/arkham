@@ -8,8 +8,6 @@ if (isset ($_POST['token'])){
     exit();
 }
 
-$output = $token_to_check->{'get_token'}();
-
 $bool = $token_to_check->{'check_token'}();
 if ($bool){
     echo "valid";
