@@ -2,7 +2,7 @@
 # author: guerillatux
 # desc: wrapper script for cronjobs
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of whatever it was given to 
-# last modified: 12.01.2020
+# last modified: 20.01.2020
 
 # Check if something was given to execute
 if [ $# -ne 1 ]; then
@@ -15,9 +15,16 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-# Variables for executing curl (or not)
+# Variables
+command="$1"
+host=$(hostname)
+url="http://localhost/cronguard_managed/cronguard.php"
+url_validate_token="http://localhost/cronguard_managed/validatetoken.php"
+start_time=$(date +%s)
+action="start"
 curl_not_present=0
 token_not_present=0
+token_not_valid=1
 
 # Check that curl is present on the system
 if ! which curl >/dev/null; then
@@ -26,32 +33,28 @@ if ! which curl >/dev/null; then
     curl_not_present=1
 fi
 
-# Include config file
+# Check that the config file was included
 if ! source /opt/cronguard/token.inc.sh 2>/dev/null; then
     echo "Could not include token.inc.sh from /opt/cronguard, the cronjob will be executed but the cronguard server will not contacted"
     echo "Please fix this manually!"
     token_not_present=1
 fi
 
+# Check that the given token is a valid one
+if (( $curl_not_present == 0)) && (( $token_not_present == 0 )); then
+    if [ "$(curl -s -X POST -F "token=$token" $url_validate_token)" == "valid" ]; then
+        token_not_valid=0
+    fi
+fi
+
 # Checking the prerequisites for contacting the cronguard server
 check_prerequisites(){
-    if (( $curl_not_present == 0 )) && (( $token_not_present == 0 )); then
+    if (( $token_not_valid == 0 )); then
         return 0
     else
         return 1
     fi
 }
-
-##Fixme
-# code for validating the token
-##Fixme
-
-# Variables
-command="$1"
-host=$(hostname)
-url="http://localhost/cronguard_managed/cronguard.php"
-start_time=$(date +%s)
-action="start"
 
 if check_prerequisites; then
     # First curl, adding a new database entry with the starttime
