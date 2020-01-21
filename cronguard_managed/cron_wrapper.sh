@@ -2,7 +2,7 @@
 # author: guerillatux
 # desc: wrapper script for cronjobs
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of whatever it was given to 
-# last modified: 20.01.2020
+# last modified: 21.01.2020
 
 # Check if something was given to execute
 if [ $# -ne 1 ]; then
@@ -44,6 +44,12 @@ fi
 if (( $curl_not_present == 0)) && (( $token_not_present == 0 )); then
     if [ "$(curl -s -X POST -F "token=$token" $url_validate_token)" == "valid" ]; then
         token_not_valid=0
+    elif [ "$(curl -s -X POST -F "token=$token" $url_validate_token)" == "invalid" ]; then
+        echo "Your token \"$token\" is not valid and cronguard will not contacted!"
+	echo "(the same check will be executed on the server side regardless of this one here)"
+	echo "Please generate a new one here: http://url_tba"
+    else
+        echo "Could not determine the status of your token \"$token\", please contact mailaddress@tba"
     fi
 fi
 
