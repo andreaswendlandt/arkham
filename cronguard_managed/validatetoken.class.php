@@ -10,7 +10,7 @@ class ValidateToken {
     }
 
     public function check_token(){
-        require_once ("db.inc.php");
+        require ("db.inc.php");
         $sql = "select * from job_foo where token = '$this->token'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {
