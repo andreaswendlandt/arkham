@@ -1,1 +1,5 @@
+# table token_mail
 CREATE TABLE token_mail ( tokenid INT NOT NULL AUTO_INCREMENT, token CHAR(6), email VARCHAR(100), PRIMARY KEY (tokenid) ) ENGINE MyISAM;
+
+# table job
+CREATE TABLE job ( jobid INT NOT NULL AUTO_INCREMENT, ident CHAR(6), token CHAR(6), host VARCHAR(50), start_time BIGINT, end_time BIGINT, command VARCHAR(300), action VARCHAR(8), result VARCHAR(7), PRIMARY KEY (jobid) ) ENGINE MyISAM;
