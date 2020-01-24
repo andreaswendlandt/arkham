@@ -4,7 +4,7 @@ require ("db.inc.php");
 include "validatetoken.class.php";
 /* function api() {
     global $conn;
-    $sql = "SELECT * FROM job_foo";
+    $sql = "SELECT * FROM job_test";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $cronjobs = array();
@@ -44,7 +44,8 @@ else {
 }
 
 if ($action == 'start') {
-    if (isset($_POST['token']) && isset($_POST['host']) && isset($_POST['start_time']) && isset($_POST['command'])) {
+    if (isset($_POST['ident']) && isset($_POST['token']) && isset($_POST['host']) && isset($_POST['start_time']) && isset($_POST['command'])) {
+        $ident = $_POST['ident'];
         $token = $_POST['token'];
         $host = $_POST['host'];
         $start_time = $_POST['start_time'];
@@ -55,13 +56,12 @@ if ($action == 'start') {
     }
     $token_to_check_before = new ValidateToken($_POST['token']);
     var_dump($token_to_check_before);
-    $bool = $token_to_check_before->{'check_token'}();
-    var_dump($bool);
-    if ($bool){
-	echo "foobar";
-        $stmt = $conn->prepare("INSERT INTO job_foo (token, host, start_time, command, action)
-        VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssiss", $token, $host, $start_time, $command, $action);
+    $bool_before = $token_to_check_before->{'check_token'}();
+    var_dump($bool_before);
+    if ($bool_before){
+        $stmt = $conn->prepare("INSERT INTO job_test (ident, token, host, start_time, command, action)
+        VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssiss", $ident, $token, $host, $start_time, $command, $action);
         if ($stmt->execute() === TRUE){
             echo "New record created successfully";
         }
@@ -74,8 +74,8 @@ if ($action == 'start') {
     }
 }
 elseif ($action == "finished") {
-    if (isset($_POST['token']) && isset($_POST['end_time']) && isset($_POST['result'])) {
-        $token = $_POST['token'];
+    if (isset($_POST['ident']) && isset($_POST['end_time']) && isset($_POST['result'])) {
+        $ident = $_POST['ident'];
         $end_time = $_POST['end_time'];
         $result = $_POST['result'];
     }
@@ -87,8 +87,8 @@ elseif ($action == "finished") {
     $bool_after = $token_to_check_after->{'check_token'}();
     var_dump($bool_after);
     if ($bool_after){
-        $stmt = $conn->prepare("UPDATE job_foo SET end_time = ?, action = ?, result = ? WHERE token = ?");
-        $stmt->bind_param("isss", $end_time, $action, $result, $token);
+        $stmt = $conn->prepare("UPDATE job_test SET end_time = ?, action = ?, result = ? WHERE ident = ?");
+        $stmt->bind_param("isss", $end_time, $action, $result, $ident);
         if ($stmt->execute() === TRUE){
             echo "Record updated successfully";
         }
