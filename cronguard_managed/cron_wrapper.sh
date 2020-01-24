@@ -25,6 +25,7 @@ action="start"
 curl_not_present=0
 token_not_present=0
 token_not_valid=1
+ident=$(openssl rand -hex 3)
 
 # Check that curl is present on the system
 if ! which curl >/dev/null; then
@@ -64,7 +65,7 @@ check_prerequisites(){
 
 if check_prerequisites; then
     # First curl, adding a new database entry with the starttime
-    #curl -X POST -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
+    #curl -X POST -F "ident=$ident" -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
     echo "execute first curl"
 else
     echo "not execute first curl"
@@ -96,7 +97,7 @@ if check_prerequisites; then
     # Define the Endtime and make the second Curl, modify the above Database Entry
     action="finished"
     end_time=$(date +%s)
-    #curl -X POST -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
+    #curl -X POST -F "ident=$ident" -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
     echo "execute second curl"
 else
     echo "not execute second curl"
