@@ -11,7 +11,7 @@ class ValidateToken {
 
     public function check_token(){
         require ("db.inc.php");
-        $sql = "select * from job_foo where token = '$this->token'";
+        $sql = "select * from token_mail where token = '$this->token'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {
 	    return true;
