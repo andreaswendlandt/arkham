@@ -2,7 +2,7 @@
 # author: guerillatux
 # desc: wrapper script for cronjobs
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of whatever it was given to 
-# last modified: 21.01.2020
+# last modified: 25.01.2020
 
 # Check if something was given to execute
 if [ $# -ne 1 ]; then
@@ -34,10 +34,13 @@ if ! which curl >/dev/null; then
     curl_not_present=1
 fi
 
-# Check that the config file was included
+# Check that the config file was included and $token has a value
 if ! source /opt/cronguard/token.inc.sh 2>/dev/null; then
     echo "Could not include token.inc.sh from /opt/cronguard, the cronjob will be executed but the cronguard server will not contacted"
     echo "Please fix this manually!"
+    token_not_present=1
+elif [ -z $token ]; then
+    echo "The token variable \$token is empty, the cronjob will be executed but the cronguard server will not contacted"
     token_not_present=1
 fi
 
@@ -65,10 +68,7 @@ check_prerequisites(){
 
 if check_prerequisites; then
     # First curl, adding a new database entry with the starttime
-    #curl -X POST -F "ident=$ident" -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
-    echo "execute first curl"
-else
-    echo "not execute first curl"
+    curl -X POST -F "ident=$ident" -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
 fi
 
 # Execute the cron command and save the pipestatus in the variable "pipe"
@@ -97,8 +97,5 @@ if check_prerequisites; then
     # Define the Endtime and make the second Curl, modify the above Database Entry
     action="finished"
     end_time=$(date +%s)
-    #curl -X POST -F "ident=$ident" -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
-    echo "execute second curl"
-else
-    echo "not execute second curl"
+    curl -X POST -F "ident=$ident" -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
 fi
