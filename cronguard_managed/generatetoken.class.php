@@ -13,6 +13,7 @@ class GenerateToken {
     }
 
     public function generate_token(){
+        return substr(md5(mt_rand()), 0, 6);
     }
 
     public function write_to_database($token, $email){
@@ -27,8 +28,5 @@ class GenerateToken {
             return false;
         }
         $stmt->close();
-  
-
-
     }
 }
