@@ -9,7 +9,13 @@ class GenerateToken {
         return $this->email;
     }
 
-    public function validate_email(){
+    public function validate_email($email){
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return true;
+	} else {
+	    return false;
+        }
+
     }
 
     public function generate_token(){
