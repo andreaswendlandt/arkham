@@ -1,16 +1,18 @@
 <?php
 include "validatetoken.class.php";
 
-if (isset ($_POST['token'])){
-    $token_to_check = new ValidateToken($_POST['token']);
+if (!empty($_POST['token'])){
+    $token = $_POST['token'];
 } else {
     echo "No token provided, aborting";
     exit();
 }
 
+$token_to_check = new ValidateToken($token);
+
 $bool = $token_to_check->{'check_token'}();
 if ($bool){
-    echo "valid";
+    echo "Token: $token is valid";
 } else {
-    echo "invalid";
+    echo "Token: $token is not valid";
 }
