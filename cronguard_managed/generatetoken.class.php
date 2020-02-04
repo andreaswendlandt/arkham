@@ -18,6 +18,18 @@ class GenerateToken {
 
     }
 
+    public function check_mail_doubling($email){
+        require ("db.inc.php");
+        $sql = "select * from token_mail where email = '$this->email'";
+        $result = $conn->query($sql);
+        if ($result->num_rows == 0) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     public function generate_token(){
         return substr(md5(mt_rand()), 0, 6);
     }
