@@ -12,3 +12,4 @@ echo "<div id=\"nav\"></div>";
 ?>
 <div id="content">
 <h2>Download the Cronguard Wrapper</h2> 
+<a href="download.php">Direct Download</a>
