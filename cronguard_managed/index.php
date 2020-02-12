@@ -16,6 +16,29 @@ echo "<div id=\"nav\"></div>";
 
 <h3>#What it is</h3>
 <h3>#How it works</h3>
+You let your cronjob execute by the cron_wrapper.sh script, just put the script before your cronjob the following way: <br />
+15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command" <br />
+15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
+15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br />
+It will send some data via curl to the cronguard server(token, ident, host, start time, command and action) which writes them<br />
+to a database, executes the cronjob and checks if the command(s)/script were successfully executed and makes the second curl<br />
+to the server with the result(failed or success).<br />
+On the server runs a daemon that checks every minute minute for new database entries, entries with a 'success' as a result<br />
+will just be deleted, entries with a 'fail' as a result will be send per mail - and then deleted, if there is no result<br />
+and the cronjob is running longer than one day(86400 seconds) a mail will be send as well and the entry will deleted<br />
+To get it working generate a token, store the token in /opt/cronguard/token.inc.sh<br />
+(this is the location where the wrapper expects it), download the wrapper script cron_wrapper.sh and you can start<br />
+beside generating a token you can - if you are not sure if your token is valid - validate your token and of course<br />
+remove your token(and your email address)<br />
+If you lost or forgot your token you can on the dedicated section let your token have sent to you<br />
+This application has also a simple api, you can check if there are any entries(for your token), you can call this api like this:<br />
+http://cronguard.ddns.net/cronguard_api.php?method=api&token=`your_token`<br />
+Some further and additional information can be found here 
+<a href="https://github.com/andreaswendlandt/gotham/tree/master/cronguard">Cronguard on GitHub</a><br />
+In case you want to manage cronguard on your own you can download everything you need for that(including .deb packages) <br />
+from the GitHub link.<br /> 
+Even some minimally invasive testing is possible as there is a docker image on DockerHub:<br />
+<a href="https://hub.docker.com/r/andreaswendlandt/cronguard">Cronguard on Docker Hub</a><br />
 <h3>#What do i need</h3>
 Only 2 things, the script cron_wrapper.sh which executes your cronjobs and a valid token <br />
 you can get both on this site, the cron_wrapper.sh script from the download section,<br />
