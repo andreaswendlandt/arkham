@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html lang="de"> 
+<html lang="en"> 
 <head> 
 <meta charset="utf-8"> 
 <title>Cronguard</title> 
@@ -15,11 +15,23 @@ echo "<div id=\"nav\"></div>";
 <h2>- Let your Cronjobs get evaluated -</h2>
 
 <h3>#What it is</h3>
+Cronguard is designed to evaluate cronjobs, one might say:"cron can do this this on his own" - yes and no.<br />
+Yes cron can do that but it is error-prone, at least for piped commands, consider you execute the following:<br />
+true | false | true && echo "success" || else echo "fail"<br />
+Guess what will be echoed here, correct - success and with that the logic of the results for cronjobs is wrong<br />
+The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable<br />
+<i>${PIPESTATUS[*]}</i><br />
+The second purpose of Cronguard is to get rid of these annoying mails you have to check as an admin every day:<br />
+<i>'Yes the cronjob XY on Server Z was successful'</i><br />
+Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy)work.<br />
+Cronguard will only send mails in case of failed cronjobs and cronjobs that are running longer than one day.<br />
+About successfully executed ones does Cronguard not care about<br />
+(technically for Cronguard every cronjob is an entry in a database and the successful ones will just be deleted)
 <h3>#How it works</h3>
-You let your cronjob execute by the cron_wrapper.sh script, just put the script before your cronjob the following way: <br />
+You let your cronjob execute by the cron_wrapper.sh script, just put the script before your cronjob the following way: <br /><br />
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command" <br />
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
-15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br />
+15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br /><br />
 It will send some data via curl to the cronguard server(token, ident, host, start time, command and action) which writes them<br />
 to a database, executes the cronjob and checks if the command(s)/script were successfully executed and makes the second curl<br />
 to the server with the result(failed or success).<br />
