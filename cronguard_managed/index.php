@@ -18,14 +18,14 @@ echo "<div id=\"nav\"></div>";
 Cronguard is designed to evaluate cronjobs, one might say:"cron can do this this on his own" - yes and no.<br />
 Yes cron can do that but it is error-prone, at least for piped commands, consider you execute the following:<br />
 true | false | true && echo "success" || else echo "fail"<br />
-Guess what will be echoed here, correct - success and with that the logic of the results for cronjobs is wrong<br />
+Guess what will be echoed here, correct - success and with that the logic of the results for cronjobs is wrong.<br />
 The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable<br />
 <i>${PIPESTATUS[*]}</i><br />
 The second purpose of Cronguard is to get rid of these annoying mails you have to check as an admin every day:<br />
 <i>'Yes the cronjob XY on Server Z was successful'</i><br />
-Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy)work.<br />
+Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy) work.<br />
 Cronguard will only send mails in case of failed cronjobs and cronjobs that are running longer than one day.<br />
-About successfully executed ones does Cronguard not care about<br />
+About successfully executed ones Cronguard does not care about.<br />
 (technically for Cronguard every cronjob is an entry in a database and the successful ones will just be deleted)
 <h3>#How it works</h3>
 You let your cronjob execute by the cron_wrapper.sh script, just put the script before your cronjob the following way: <br /><br />
@@ -33,9 +33,9 @@ You let your cronjob execute by the cron_wrapper.sh script, just put the script 
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br /><br />
 It will send some data via curl to the cronguard server(token, ident, host, start time, command and action) which writes them<br />
-to a database, executes the cronjob and checks if the command(s)/script were successfully executed and makes the second curl<br />
+to a database, executes the cronjob and checks if the command(s)/script were successfully executed and makes then the second curl<br />
 to the server with the result(failed or success).<br />
-On the server runs a daemon that checks every minute minute for new database entries, entries with a 'success' as a result<br />
+On the server runs a daemon that checks every minute for new database entries, entries with a 'success' as a result<br />
 will just be deleted, entries with a 'fail' as a result will be send per mail - and then deleted, if there is no result<br />
 and the cronjob is running longer than one day(86400 seconds) a mail will be send as well and the entry will deleted<br />
 To get it working generate a token, store the token in /opt/cronguard/token.inc.sh<br />
@@ -58,7 +58,7 @@ the token you can generate at the generate token section(all you need for that i
 <h3>#What does it cost</h3>
 NOTHING, using this service is absolutely and 100% for free! <br />
 If you have a bad conscience about not paying for it - please support your local animal shelter. 
-<h3>#About the Author</h3>
+<h3>#About the author</h3>
 My name is andreas, i'm a linux administrator/system engineer and open source enthusiast.<br />
 I live in berlin and worked here for several companies - startups as well as public service and established company composite.<br />
 More about me and what i do on the following links (and about cronguard on github and dockerhub).<br />
