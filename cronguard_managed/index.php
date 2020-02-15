@@ -22,7 +22,7 @@ Guess what will be echoed here, correct - success and with that the logic of the
 The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable<br />
 <i>${PIPESTATUS[*]}</i><br />
 The second purpose of Cronguard is to get rid of these annoying mails you have to check as an admin every day:<br />
-<i>'Yes the cronjob XY on Server Z was successful'</i><br />
+<i>'Yes the cronjob XY on Server Z was successful...'</i><br />
 Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy) work.<br />
 Cronguard will only send mails in case of failed cronjobs and cronjobs that are running longer than one day.<br />
 About successfully executed ones Cronguard does not care about.<br />
@@ -37,24 +37,24 @@ to a database, executes the cronjob and checks if the command(s)/script were suc
 to the server with the result(failed or success).<br />
 On the server runs a daemon that checks every minute for new database entries, entries with a 'success' as a result<br />
 will just be deleted, entries with a 'fail' as a result will be send per mail - and then deleted, if there is no result<br />
-and the cronjob is running longer than one day(86400 seconds) a mail will be send as well and the entry will deleted<br />
+and the cronjob is running longer than one day(86400 seconds) a mail will be send as well and the entry will be deleted.<br />
 To get it working generate a token, store the token in /opt/cronguard/token.inc.sh<br />
-(this is the location where the wrapper expects it), download the wrapper script cron_wrapper.sh and you can start<br />
-beside generating a token you can - if you are not sure if your token is valid - validate your token and of course<br />
+(this is the location where the wrapper expects it), download the wrapper script cron_wrapper.sh and you can start.<br />
+Beside generating a token you can - if you are not sure if your token is valid - validate your token and of course<br />
 remove your token(and your email address)<br />
-If you lost or forgot your token you can on the dedicated section let your token have sent to you<br />
+If you lost or forgot your token you can on the dedicated section let your token sent to you.<br />
 This application has also a simple api, you can check if there are any entries(for your token), you can call this api like this:<br />
 http://cronguard.ddns.net/cronguard_api.php?method=api&token=`your_token`<br />
-Some further and additional information can be found here 
+Some further and additional information can be found here: 
 <a href="https://github.com/andreaswendlandt/gotham/tree/master/cronguard">Cronguard on GitHub</a><br />
-In case you want to manage cronguard on your own you can download everything you need for that(including .deb packages) <br />
+In case you want to manage cronguard on your own you can download everything you need for that(including .deb packages)<br />
 from the GitHub link.<br /> 
 Even some minimally invasive testing is possible as there is a docker image on DockerHub:<br />
 <a href="https://hub.docker.com/r/andreaswendlandt/cronguard">Cronguard on Docker Hub</a><br />
 <h3>#What do i need</h3>
-Only 2 things, the script cron_wrapper.sh which executes your cronjobs and a valid token <br />
-you can get both on this site, the cron_wrapper.sh script from the download section,<br />
-the token you can generate at the generate token section(all you need for that is a valid email address)<br />
+Only 2 things, the script cron_wrapper.sh which executes your cronjobs and a valid token.<br />
+You can get both on this site, the cron_wrapper.sh script from the download section,<br />
+and the token you can generate at the generate token section(all you need for that is a valid email address)<br />
 <h3>#What does it cost</h3>
 NOTHING, using this service is absolutely and 100% for free! <br />
 If you have a bad conscience about not paying for it - please support your local animal shelter. 
