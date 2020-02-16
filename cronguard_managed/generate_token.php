@@ -13,10 +13,10 @@ echo "<div id=\"nav\"></div>";
 <div id="content">
 <h2>Generate a Token</h2>
 Here you can generate a token, type a valid email address into the form below and a token will be generated.<br />
-Take that token and put it into a file named tocken.inc.sh and place that file in the directory /opt/cronguard< br/>
-It should have the following content:<br />
-#/opt/cronguard/token.inc.sh
-token="put_your_token_here"<br />
+Take that token and put it into a file named tocken.inc.sh and place that file in the directory /opt/cronguard.<br />
+What you can do as well is  download a template with no value from the download section and put your<br />
+generated token there - <strong>important</strong> is that you move that file to /opt/cronguard because<br />
+the cron_wrapper.sh expects it there.<br />
 <br />
 <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
 Email address <input type="text" name="email" /><br /><br />
