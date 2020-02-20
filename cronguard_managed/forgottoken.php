@@ -1,5 +1,5 @@
 <?php
-include "forgottoken.class.php";
+include "class/forgottoken.class.php";
 
 if (!empty($_POST['email'])){
     $email = $_POST['email'];

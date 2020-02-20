@@ -1,5 +1,5 @@
 <?php
-include "removetokenmail.class.php";
+include "class/removetokenmail.class.php";
 
 if (!empty($_POST['token'])){
     $token = $_POST['token'];

@@ -19,7 +19,7 @@ Email <input type="text" name="email" /><br /><br />
 <br />
 <?php
 if(isset($_POST['submit'])){
-    include "forgottoken.class.php";
+    include "class/forgottoken.class.php";
     if (!empty($_POST['email'])){
         $email = $_POST['email'];
     } else {

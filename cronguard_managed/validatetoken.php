@@ -1,5 +1,5 @@
 <?php
-include "validatetoken.class.php";
+include "class/validatetoken.class.php";
 
 if (!empty($_POST['token'])){
     $token = $_POST['token'];

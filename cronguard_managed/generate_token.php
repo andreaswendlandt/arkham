@@ -25,7 +25,7 @@ Email address <input type="text" name="email" /><br /><br />
 <br />
 <?php
 if(isset($_POST['submit'])){
-    include "generatetoken.class.php";
+    include "class/generatetoken.class.php";
     if (!empty($_POST['email'])){
         $email = $_POST['email'];
     } else {

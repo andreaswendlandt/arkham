@@ -1,5 +1,5 @@
 <?php
-include "generatetoken.class.php";
+include "class/generatetoken.class.php";
 
 if (!empty($_POST['email'])){
     $email = $_POST['email'];

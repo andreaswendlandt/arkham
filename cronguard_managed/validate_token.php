@@ -26,7 +26,7 @@ Token <input type="text" name="token" /><br /><br />
 <br />
 <?php
 if(isset($_POST['submit'])){
-    include "validatetoken.class.php";
+    include "class/validatetoken.class.php";
     if (!empty($_POST['token'])){
         $token = $_POST['token'];
     } else {
