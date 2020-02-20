@@ -19,7 +19,7 @@ class GenerateToken {
     }
 
     public function check_mail_doubling($email){
-        require ("db.inc.php");
+        require ("inc/db.inc.php");
         $sql = "select * from token_mail where email = '$this->email'";
         $result = $conn->query($sql);
         if ($result->num_rows == 0) {
@@ -35,7 +35,7 @@ class GenerateToken {
     }
 
     public function write_to_database($token, $email){
-	require ("db.inc.php");
+	require ("inc/db.inc.php");
 	$stmt = $conn->prepare("INSERT INTO token_mail (token, email)
         VALUES (?, ?)");
         $stmt->bind_param("ss", $token, $email);

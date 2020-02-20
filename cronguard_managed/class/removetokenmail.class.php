@@ -10,7 +10,7 @@ class RemoveTokenMail {
     }
 
     public function check_token(){
-        require_once ("db.inc.php");
+        require_once ("inc/db.inc.php");
         $sql = "select * from token_mail where token = '$this->token'";
         $result = $conn->query($sql);
         if ($result->num_rows == 1) {
@@ -22,7 +22,7 @@ class RemoveTokenMail {
     }
     
     public function remove_from_database($token){
-	require ("db.inc.php");
+	require ("inc/db.inc.php");
 	$stmt = $conn->prepare("DELETE FROM token_mail WHERE token = ?");
         $stmt->bind_param("s", $token);
         if ($stmt->execute() === TRUE){

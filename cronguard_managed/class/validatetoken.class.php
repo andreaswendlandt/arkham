@@ -10,7 +10,7 @@ class ValidateToken {
     }
 
     public function check_token(){
-        require ("db.inc.php");
+        require ("inc/db.inc.php");
         $sql = "select * from token_mail where token = '$this->token'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {

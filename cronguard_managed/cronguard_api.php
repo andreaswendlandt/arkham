@@ -1,5 +1,5 @@
 <?php
-require_once ("db.inc.php");
+require_once ("inc/db.inc.php");
 include "validatetoken.class.php";
 
 function usage(){

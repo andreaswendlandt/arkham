@@ -1,5 +1,5 @@
 <?php
-require ("db.inc.php");
+require ("inc/db.inc.php");
 include "validatetoken.class.php";
 
 if (isset($_POST['action'])) {

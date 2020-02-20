@@ -10,7 +10,7 @@ class ForgotToken {
     }
 
     public function check_email(){
-        require ("db.inc.php");
+        require ("inc/db.inc.php");
         $sql = "select * from token_mail where email = '$this->email'";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {
@@ -22,7 +22,7 @@ class ForgotToken {
     }
 
     public function return_token(){
-        require ("db.inc.php");
+        require ("inc/db.inc.php");
         $sql = "select * from token_mail where email = '$this->email'";
         $result = $conn->query($sql);
 	$row = $result->fetch_assoc();
