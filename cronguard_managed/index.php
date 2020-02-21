@@ -28,7 +28,7 @@ Cronguard will only send mails in case of failed cronjobs and cronjobs that are 
 About successfully executed ones Cronguard does not care about.<br />
 (technically for Cronguard every cronjob is an entry in a database and the successful ones will just be deleted)
 <h3>#How it works</h3>
-You let your cronjob execute by the cron_wrapper.sh script, just put the script before your cronjob the following way: <br /><br />
+You let your cronjob execute by the cron_wrapper.sh script, just put the script in front of your cronjob the following way: <br /><br />
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command" <br />
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
 15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br /><br />
@@ -66,3 +66,6 @@ More about me and what i do on the following links (and about cronguard on githu
 <a href="https://github.com/andreaswendlandt/">GitHub</a><br />
 <a href="https://www.xing.com/profile/Andreas_Wendlandt3">Xing</a><br />
 <a href="https://hub.docker.com/u/andreaswendlandt">Docker Hub</a><br />
+<br />
+In case of any questions, critics, praise or suggestions don't hesitate to contact me:<br />
+<a href="mailto:andreas.cronguard@gmail.com">mail andreas</a>
