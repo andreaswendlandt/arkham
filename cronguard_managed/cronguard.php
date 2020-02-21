@@ -1,6 +1,6 @@
 <?php
 require ("inc/db.inc.php");
-include "validatetoken.class.php";
+include "class/validatetoken.class.php";
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -21,22 +21,20 @@ if ($action == 'start') {
         die("no data retrieved\n");
     }
     $token_to_check_before = new ValidateToken($_POST['token']);
-    var_dump($token_to_check_before);
     $bool_before = $token_to_check_before->{'check_token'}();
-    var_dump($bool_before);
     if ($bool_before){
-        $stmt = $conn->prepare("INSERT INTO job_test (ident, token, host, start_time, command, action)
+        $stmt = $conn->prepare("INSERT INTO job (ident, token, host, start_time, command, action)
         VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssiss", $ident, $token, $host, $start_time, $command, $action);
         if ($stmt->execute() === TRUE){
-            echo "New record created successfully";
+            echo "New record created successfully\n";
         }
         else {
-            echo "Error with creating a new record";
+            echo "Error with creating a new record\n";
         }
         $stmt->close();
     } else {
-        echo "Your token is not valid, please create a new one!";
+        echo "Your token is not valid, please create a new one!\n";
     }
 }
 elseif ($action == "finished") {
@@ -49,23 +47,21 @@ elseif ($action == "finished") {
         die("no data retrieved\n");
     }
     $token_to_check_after = new ValidateToken($_POST['token']);
-    var_dump($token_to_check_after);
     $bool_after = $token_to_check_after->{'check_token'}();
-    var_dump($bool_after);
     if ($bool_after){
-        $stmt = $conn->prepare("UPDATE job_test SET end_time = ?, action = ?, result = ? WHERE ident = ?");
+        $stmt = $conn->prepare("UPDATE job SET end_time = ?, action = ?, result = ? WHERE ident = ?");
         $stmt->bind_param("isss", $end_time, $action, $result, $ident);
         if ($stmt->execute() === TRUE){
-            echo "Record updated successfully";
+            echo "Record updated successfully\n";
         }
         else {
-            echo "Error with updating the record";
+            echo "Error with updating the record\n";
         }
         $stmt->close();
     }
 }
 else {
-    die("something messed up");
+    die("something messed up\n");
 }
 
 $conn->close();
