@@ -12,6 +12,15 @@ echo "<div id=\"nav\"></div>";
 ?>
 <div id="content">
 <h2>Remove your Token and Mailaddress</h2>
+Here you can remove your token and your mailaddress by typing your token into the form,<br />
+it will check if the token is a valid one and then remove the corresponding database entry<br />
+(with the token and the mailaddress)<br />
+Keep in mind that there will be no further confirmation - if you press the `Send Token` button<br />
+your token/mailaddress will be deleted.<br />
+If you don't know your token anymore and want your token/mailaddress deleted anyway - go to the<br />
+<a href="http://cronguard.ddns.net/forgot_token.php">Forgot Token</a> Site, let your token send to you<br />
+and delete it afterwards here.<br />
+<br />
 <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
 Token <input type="text" name="token" /><br /><br />
 <input type="submit" name="submit" value="Send Token" />
