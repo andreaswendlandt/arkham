@@ -16,7 +16,7 @@ Here you can validate a token, type your token into the form below and it will c
 and finally return the result, in case your token is valid you can write with that token as kind of an authentication<br />
 to the database - in the way of running the cron_wrapper.sh script with the include file<br />
 'token.inc.sh'(where the token is in). If your token is not valid you have two choices, either you go to the<br />
-<a href="http://cronguard.ddns.net/forgot_token.php">Forgot Token</a> site, type in your mail and your token will be send to you via mail<br />
+<a href="http://cronguard.ddns.net/forgot_token.php">Forgot Token</a> site, type in your mailaddress and your token will be send to you,<br />
 or you just create a new one at the 'generate token' page.<br />
 <br />
 <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
