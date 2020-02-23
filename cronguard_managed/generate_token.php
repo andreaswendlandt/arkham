@@ -46,7 +46,7 @@ if(isset($_POST['submit'])){
                     $subject = "Your new token from cronguard";
                     $message = "Your token is: $token";
                     send_mail($email, $subject, $message);
-                    echo "A mail has been send to $email";
+                    echo "A mail has been sent to $email";
                 } else {
                     echo "Could not create a new database entry, please contact the admin";
                 }
