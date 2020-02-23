@@ -24,6 +24,7 @@ Email <input type="text" name="email" /><br /><br />
 <?php
 if(isset($_POST['submit'])){
     include "class/forgottoken.class.php";
+    include "inc/mail.inc.php";
     if (!empty($_POST['email'])){
         $email = $_POST['email'];
     } else {
@@ -34,9 +35,13 @@ if(isset($_POST['submit'])){
     $bool = $email_to_check->{'check_email'}();
     if ($bool){
         $token = $email_to_check->{'return_token'}();
-        echo "The token for the emailaddress $email is \"$token\"";
+        echo "The token for the emailaddress $email is \"$token\"" . "<br />";
+        $subject = "Your token from cronguard";
+        $message = "Your token is: $token";
+        send_mail($email, $subject, $message);
+        echo "A mail has been sent to $email";
     } else {
-        echo "Email: $email does not exist";
+        echo "Email: $email does not exist on this system";
     }
 }
 ?>

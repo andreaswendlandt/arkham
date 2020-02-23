@@ -26,6 +26,7 @@ Email address <input type="text" name="email" /><br /><br />
 <?php
 if(isset($_POST['submit'])){
     include "class/generatetoken.class.php";
+    include "inc/mail.inc.php";
     if (!empty($_POST['email'])){
         $email = $_POST['email'];
     } else {
@@ -40,13 +41,17 @@ if(isset($_POST['submit'])){
             $token = $gen_token->{'generate_token'}();
             $bool_gen = $gen_token->{'write_to_database'}($token, $email);
                 if ($bool_gen){
-                    echo "Email: $email is valid and a new database entry was created\n";
-                    echo "Your Token is: \"$token\"";
+                    echo "Email: $email is valid and a new database entry was created" . "<br />";
+                    echo "Your Token is: \"$token\"" . "<br />";
+                    $subject = "Your new token from cronguard";
+                    $message = "Your token is: $token";
+                    send_mail($email, $subject, $message);
+                    echo "A mail has been send to $email";
                 } else {
                     echo "Could not create a new database entry, please contact the admin";
                 }
         } else {
-            echo "Email: $email is not a valid email address\n";
+            echo "Email: $email is not a valid email address";
         }
     } else {
         echo "Email: $email already exist!";
