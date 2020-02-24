@@ -37,7 +37,8 @@ fi
 send_mail(){
     subject="$1"
     body="$2"
-    echo "$body" | mail -s "$subject" $mail_to
+    recipient="$3"
+    echo "$body" | mail -s "$subject" $recipient
 }
 
 # Starting Cronguard Function
@@ -130,7 +131,7 @@ cronguard() {
                 log "$4 will be sent"
                 failed_command=$(mysql -u $db_user -p$db_password $db -e"SELECT command FROM $table WHERE ident =\"$4\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
                 mail_to=$(mysql -u $db_user -p$db_password $db -e"SELECT email FROM token_mail WHERE token =\"$1\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
-                if send_mail "Failed Cronjob on $3" "This Cronjob failed: \"$failed_command\""; then
+                if send_mail "Failed Cronjob on $3" "This Cronjob failed: \"$failed_command\"" $mail_to; then
 	            mysql -u $db_user -p$db_password $db -e"DELETE FROM $table WHERE ident = \"$4\"" 2>&1 | grep -v 'Using a password'
 	        fi    
             elif [ "$2" == "NULL" ]; then
@@ -142,6 +143,7 @@ cronguard() {
 	        running_since=$((current_time-start_time))
                 if [ $running_since -ge 86400 ]; then
                 long_running_command=$(mysql -u $db_user -p$db_password $db -e"SELECT command FROM $table WHERE ident =\"$4\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
+                mail_to=$(mysql -u $db_user -p$db_password $db -e"SELECT email FROM token_mail WHERE token =\"$1\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
                     if send_mail "Long running Cronjob on $3" "This Cronjob is running longer than one day($running_since seconds): \"$long_running_command\""; then
                         mysql -u $db_user -p$db_password $db -e"DELETE FROM $table WHERE ident = \"$4\"" 2>&1 | grep -v 'Using a password'
 	            fi
