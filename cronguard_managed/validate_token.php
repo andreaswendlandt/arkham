@@ -8,7 +8,6 @@
 <body> 
 <?php
 require_once('navigation.php');
-echo "<div id=\"nav\"></div>";
 ?>
 <div id="content">
 <h2>Validate a Token</h2> 
