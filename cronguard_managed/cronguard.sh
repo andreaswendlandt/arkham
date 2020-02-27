@@ -28,7 +28,7 @@ log() {
 }
 
 # Include Config Files
-if ! source db.inc.sh 2>/dev/null; then
+if ! source /opt/cronguard/db.inc.sh 2>/dev/null; then
     log "Could not include db.inc.sh from /opt/cronguard, aborting"
     exit 1
 fi
