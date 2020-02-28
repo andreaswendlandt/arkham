@@ -17,8 +17,8 @@ fi
 # Variables
 command="$1"
 host=$(hostname)
-url="http://cronguard.ddns.net/cronguard.php"
-url_validate_token="http://cronguard.ddns.net/validate_token_wrapper.php"
+url="https://cronguard.ddns.net/cronguard.php"
+url_validate_token="https://cronguard.ddns.net/validate_token_wrapper.php"
 start_time=$(date +%s)
 action="start"
 curl_not_present=0

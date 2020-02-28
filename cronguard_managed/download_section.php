@@ -30,7 +30,7 @@ into the token.inc.sh file and you can run cronjobs like this:<br />
 <h3>Download the Cronguard Wrapper</h3> 
 <a href="download_wrapper.php">Download cron_wrapper.sh</a><br />
 <h5>md5sum of cron_wrapper.sh</h5>
-973d078761f290f3703f4f836236e437
+3cf8ee69e765efa630dc355387e09ebd
 <h3>Download the token file</h3> 
 <a href="download_token.php">Download token.inc.sh</a><br />
 <h5>md5sum of token.inc.sh</h5>
