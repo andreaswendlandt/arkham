@@ -5,7 +5,7 @@ include "validatetoken.class.php";
 function usage(){
     echo "Call this api as follows:";
     echo "<br>";
-    echo "http://cronguard.ddns.net/cronguard_api.php?method=api&token=`your_token`";
+    echo "https://cronguard.ddns.net/cronguard_api.php?method=api&token=`your_token`";
 }
 
 function api($token) {
