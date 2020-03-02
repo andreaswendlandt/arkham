@@ -36,17 +36,19 @@
       15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
       15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br /><br />
     </div>
-      <div class="ui segment">
-        <h3 class="ui header">Download the Cronguard Wrapper</h3>
+      <div class="ui horizontal segments">
+        <div class="ui segment">
+        <h3>Download the Cronguard Wrapper</h3>
         <a href="download_wrapper.php">Download cron_wrapper.sh</a> 
-        <h5 class="ui header">md5sum of cron_wrapper.sh</h5>
+        <h5>md5sum of cron_wrapper.sh</h5>
         3cf8ee69e765efa630dc355387e09ebd
-      </div>
-      <div class="ui segment">
-        <h3 class="ui header">Download the token file</h3>
-        <a href="download_token.php">Download token.inc.sh</a><br /><br />
-        <strong>md5sum of token.inc.sh</strong><br />
+        </div>
+        <div class="ui segment">
+        <h3>Download the token file</h3>
+        <a href="download_token.php">Download token.inc.sh</a>
+        <h5>md5sum of token.inc.sh</h5>
         2711b362abf2b680c9efbb1b22936cf9
+        </div>
       </div>
   </div>
   </body>
