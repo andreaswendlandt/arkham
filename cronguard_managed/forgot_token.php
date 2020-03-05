@@ -26,7 +26,7 @@
       </div>
     <h4 class="ui top attached inverted header">What will be done here</h4>
     <div class="ui segment">
-      Here you can let the application send your token to you in case you forgot or lost it. Just type in your mailaddress and the token will       send to you - provided that your mailaddress is associated to a token.
+      Here you can let the application send your token to you in case you forgot or lost it. Just type in your email address and the token will       send to you - provided that your email address is associated to a token.
     </div>
     <form class="ui form" method="POST" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
       <div class="fields">
@@ -53,7 +53,7 @@
         $bool = $email_to_check->{'check_email'}();
         if ($bool){
             $token = $email_to_check->{'return_token'}();
-            echo "The token for the emailaddress $email is \"$token\"" . "<br />";
+            echo "The token for the email address $email is \"$token\"" . "<br />";
             $subject = "Your token from cronguard";
             $message = "Your token is: $token";
             send_mail($email, $subject, $message);
