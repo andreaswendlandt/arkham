@@ -26,7 +26,7 @@
       </div>
     <h4 class="ui top attached inverted header">What will be done here</h4>
     <div class="ui segment">
-      Here you can remove your token and your email address by typing your token into the form, it will check if the token is a valid one and         then remove the corresponding database entry (with the token and the email address). Keep in mind that there will be no further                 confirmation - if you press the `Submit` button your token/email address will be deleted. If you don't know your token anymore and want         your token/email address deleted anyway - go to the <a href="https://cronguard.ddns.net/forgot_token.php">Forgot Token</a> Site, let your        token send to you and delete it afterwards here.
+      Here you can remove your token and your email address by typing your token into the form, it will check if the token is a valid one and then remove the corresponding database entry (with the token and the email address). Keep in mind that there will be no further confirmation - if you press the `Submit` button your token/email address will be deleted. If you don't know your token anymore and want your token/email address deleted anyway - go to the <a href="https://cronguard.ddns.net/forgot_token.php">Forgot Token</a> page, let your token send to you and delete it afterwards here.
     </div>
     <form class="ui form" method="POST" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
       <div class="fields">
