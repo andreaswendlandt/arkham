@@ -24,7 +24,7 @@
       <div class="ui clearing segment">
         <h2 class="ui left floated header">Validate a Token</h2>
       </div>
-    <h4 class="ui top attached inverted header">What will be done here</h4>
+    <h4 class="ui top attached blue inverted header">What will be done here</h4>
     <div class="ui segment">
       Here you can validate a token(just in case you are not sure if your token is a valid one which means it does exist in the database), type in your token into the form below and it will check that and return the result, in case your token is valid you can use it like described(put the token into the token.inc.sh, move that file to /opt/cronguard/ and run your cronjobs with the cron_wrapper.sh). If your token is not valid you have two possibilities, either you go to the <a href="https://cronguard.ddns.net/forgot_token.php">Forgot Token</a> page, type in your email address and your token will be send to you, or you just create a new one at the <a href="https://cronguard.ddns.net/generate_token.php">Generate Token</a> page.
     </div>
@@ -35,7 +35,7 @@
           <input type="text" name="token" placeholder="Token">
         </div>
       </div>
-      <button class="ui button" type="submit" name="submit">Submit</button>
+      <button class="ui labeled icon blue button" type="submit" name="submit"><i class="paper plane icon"></i>Submit</button>
     </form
     <br />
     <br />

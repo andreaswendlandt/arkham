@@ -24,7 +24,7 @@
       <div class="ui clearing segment">
         <h2 class="ui left floated header">Forgot Token</h2>
       </div>
-    <h4 class="ui top attached inverted header">What will be done here</h4>
+    <h4 class="ui top attached blue inverted header">What will be done here</h4>
     <div class="ui segment">
       Here you can let the application send your token to you in case you forgot or lost it. Just type in your email address and the token will send to you - provided that your email address is associated to a token.
     </div>
@@ -35,7 +35,7 @@
           <input type="text" name="email" placeholder="Email">
         </div>
       </div>
-      <button class="ui button" type="submit" name="submit">Submit</button>
+      <button class="ui labeled icon blue button" type="submit" name="submit"><i class="paper plane icon"></i>Submit</button>
     </form
     <br />
     <br />

@@ -55,11 +55,28 @@
       <div class="ui segment">
         <img class="ui small right floated image" src="icke.jpeg">
         My name is andreas, i'm a linux administrator/system engineer and open source enthusiast. I live in berlin and worked here for several        companies<br />
-        startups as well as public service and established company composite. More about me and what i do on the following links and about            cronguard on github and dockerhub.<br />
-        <a href="https://de.linkedin.com/in/andreas-wendlandt-231a3332">LinkedIn</a><br />
-        <a href="https://github.com/andreaswendlandt/">GitHub</a><br />
-        <a href="https://www.xing.com/profile/Andreas_Wendlandt3">Xing</a><br />
-        <a href="https://hub.docker.com/u/andreaswendlandt">Docker Hub</a><br />
+        startups as well as public service and established company composite. More about me and what i do on the following links and about            cronguard on github and dockerhub.<br /><br />
+        <a href="https://de.linkedin.com/in/andreas-wendlandt-231a3332">
+          <button class="ui icon button">
+            <i class="linkedin icon"></i>
+          </button>
+        </a>
+        <a href="https://www.xing.com/profile/Andreas_Wendlandt3">
+          <button class="ui icon button">
+            <i class="xing icon"></i>
+          </button>
+        </a>
+        <a href="https://github.com/andreaswendlandt/">
+          <button class="ui icon button">
+            <i class="github icon"></i>
+          </button>
+        </a>
+        <a href="https://hub.docker.com/u/andreaswendlandt">
+          <button class="ui icon button">
+            <i class="docker icon"></i>
+          </button>
+        </a>
+        <br />
         In case of any questions, critics, praise or suggestions don't hesitate to contact me:<br />
         <a href="mailto:andreas.cronguard@gmail.com">mail andreas</a>
       </div>

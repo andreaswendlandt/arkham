@@ -24,7 +24,7 @@
       <div class="ui clearing segment">
         <h2 class="ui left floated header">Download Section</h2>
       </div>
-    <h4 class="ui top attached inverted header">What will be done here</h4>
+    <h4 class="ui top attached blue inverted header">What will be done here</h4>
     <div class="ui segment">
       Here you can download the two components you need for interacting with the cronguard application(although the token.inc.sh is just an include file with a variable in). The file token.inc.sh <strong>MUST BE</strong> located under /opt/cronguard/, the cron_wrapper.sh can be run from anywhere - you can put the token.inc.sh wherever you want as well but then you need to adjust the cron_wrapper.sh - the 37th line:<br />
       ...<br />
