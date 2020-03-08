@@ -26,7 +26,7 @@
       </div>
     <h4 class="ui top attached inverted header">What will be done here</h4>
     <div class="ui segment">
-      Here you can generate a token, type a valid email address into the form below and a token will be generated. Take that token and put it into a file named tocken.inc.sh and place that file in the directory /opt/cronguard. What you can do as well is download a template with no value from the download site and put your generated token there - <strong>important</strong> is that you move that file to /opt/cronguard/ because the cron_wrapper.sh expects it there.
+      Here you can generate a token, type a valid email address into the form below and a token will be generated. Take that token and put it into a file named tocken.inc.sh and place that file in the directory /opt/cronguard. What you can do as well is download a template with no value from the download page <a href="https://cronguard.ddns.net/download_section.php">Download Section</a> and put your generated token there - <strong>important</strong> is that you move that file to /opt/cronguard/ because the cron_wrapper.sh expects it there.
     </div>
     <form class="ui form" method="POST" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"> 
       <div class="fields">
