@@ -25,14 +25,14 @@
         <h1 class="ui left floated header">Cronguard</h1> 
         <h2 class="ui right floated header">- Let your Cronjobs get evaluated -</h2>
       </div>
-      <h4 class="ui top attached inverted header">What it is</h4>
+      <h4 class="ui top blue attached inverted header">What it is</h4>
       <div class="ui segment">
         Cronguard is designed to evaluate cronjobs, one might say:"cron can do this this on his own" - yes and no. Yes cron can do that but it is error-prone, at least for piped commands, consider you execute the following: <i>true | false | true && echo "success" || else echo "fail"</i><br/ >
         Guess what will be echoed here, correct - success and with that the logic of the results for cronjobs is wrong. The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable - <i>${PIPESTATUS[*]}</i> - and the bash(and thus cron) uses always the last one as the "result".<br />
         The second purpose of Cronguard is to get rid of these annoying mails you have to check as an admin every day: <i>'Yes the cronjob XY on Server Z was successful...'</i><br />
         Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy) work. Cronguard will only send mails in case of failed cronjobs and cronjobs that are running longer than one day. About successfully executed ones Cronguard does not care about.
       </div>
-      <h4 class="ui top attached inverted header">How it works</h4>
+      <h4 class="ui top blue attached inverted header">How it works</h4>
       <div class="ui segment">
         You let your cronjob execute by the cron_wrapper.sh script, just put the script in front of your cronjob the following way: <br /><br />
         15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command" <br />
@@ -43,42 +43,51 @@
         Some further and additional information can be found here: <a href="https://github.com/andreaswendlandt/gotham/tree/master/cronguard">Cronguard on GitHub</a><br />
         In case you want to manage cronguard on your own you can download everything you need for that(including .deb packages) from the              GitHub link. Even some minimally invasive testing is possible as there is a docker image on DockerHub: <a href="https://hub.docker.com/r/andreaswendlandt/cronguard">Cronguard on Docker Hub</a><br />
       </div>
-      <h4 class="ui top attached inverted header">What do i need</h4>
+      <h4 class="ui top blue attached inverted header">What do i need</h4>
       <div class="ui segment">
         Only 2 things, the script cron_wrapper.sh which executes your cronjobs and a valid token. You can get both here, the cron_wrapper.sh script from the download page <a href="https://cronguard.ddns.net/download_section.php">Download Section</a>, and the token you can generate at the generate token page <a href="https://cronguard.ddns.net/generate_token.php">Generate Token</a> (all you need for that is a valid email address)
       </div>
-      <h4 class="ui top attached inverted header">What does it cost</h4>
+      <h4 class="ui top blue attached inverted header">What does it cost</h4>
       <div class="ui segment">
         NOTHING, using this service is absolutely and 100% for free! If you have a bad conscience about not paying for it - please support your       local animal shelter. 
       </div>
-      <h4 class="ui top attached inverted header">About the author</h4>
+      <h4 class="ui top blue attached inverted header">About the author</h4>
       <div class="ui segment">
         <img class="ui small right floated image" src="icke.jpeg">
         My name is andreas, i'm a linux administrator/system engineer and open source enthusiast. I live in berlin and worked here for several        companies<br />
-        startups as well as public service and established company composite. More about me and what i do on the following links and about            cronguard on github and dockerhub.<br /><br />
+        startups as well as public service and established company composite. More about me and what i do on the following social media buttons and about cronguard on github and dockerhub.<br />
         <a href="https://de.linkedin.com/in/andreas-wendlandt-231a3332">
           <button class="ui icon button">
             <i class="linkedin icon"></i>
+            LinkedIn
           </button>
         </a>
         <a href="https://www.xing.com/profile/Andreas_Wendlandt3">
           <button class="ui icon button">
             <i class="xing icon"></i>
+            Xing
           </button>
         </a>
         <a href="https://github.com/andreaswendlandt/">
           <button class="ui icon button">
             <i class="github icon"></i>
+            GitHub
           </button>
         </a>
         <a href="https://hub.docker.com/u/andreaswendlandt">
           <button class="ui icon button">
             <i class="docker icon"></i>
+            DockerHub
           </button>
         </a>
-        <br />
-        In case of any questions, critics, praise or suggestions don't hesitate to contact me:<br />
-        <a href="mailto:andreas.cronguard@gmail.com">mail andreas</a>
+        <br /><br />
+        In case of any questions, critics, praise or suggestions don't hesitate to contact me.<br />
+        <a href="mailto:andreas.cronguard@gmail.com">
+          <button class="ui labeled icon blue button">
+            <i class="envelope icon"></i>
+            mail andreas
+          </button>
+        </a>
       </div>
     </div>
   </body>
