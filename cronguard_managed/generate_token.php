@@ -12,13 +12,15 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
   </head> 
   <body> 
-    <div class="ui six item menu">
-      <a class="item" href="index.php">Home</a>
-      <a class="active item" href="generate_token.php">Generate Token</a>
-      <a class="item" href="validate_token.php">Validate Token</a>
-      <a class="item" href="download_section.php">Download Section</a>
-      <a class="item" href="remove_token_mail.php">Remove Token</a>
-      <a class="item" href="forgot_token.php">Forgot Token</a>
+    <div class="ui inverted segment">
+      <div class="ui inverted secondary six item menu">
+        <a class="item" href="index.php">Home</a>
+        <a class="active item" href="generate_token.php">Generate Token</a>
+        <a class="item" href="validate_token.php">Validate Token</a>
+        <a class="item" href="download_section.php">Download Section</a>
+        <a class="item" href="remove_token_mail.php">Remove Token</a>
+        <a class="item" href="forgot_token.php">Forgot Token</a>
+      </div>
     </div>
     <div class="ui container">
       <div class="ui clearing segment">
