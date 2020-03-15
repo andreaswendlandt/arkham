@@ -48,7 +48,7 @@
             </button>
           </a>
           <h5>md5sum of cron_wrapper.sh</h5>
-          3cf8ee69e765efa630dc355387e09ebd
+          5d834a0d275ec812ca3950f4b1024b3e
         </div>
         <div class="ui segment">
           <h3>Download the token file</h3>

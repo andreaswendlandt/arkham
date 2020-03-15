@@ -69,7 +69,7 @@ check_prerequisites(){
 
 if check_prerequisites; then
     # First curl, adding a new database entry with the starttime
-    curl -X POST -F "ident=$ident" -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
+    curl -s -X POST -F "ident=$ident" -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url >/dev/null
 fi
 
 # Execute the cron command and save the pipestatus in the variable "pipe"
@@ -98,5 +98,5 @@ if check_prerequisites; then
     # Define the endtime and make the second curl, modify the above database entry
     action="finished"
     end_time=$(date +%s)
-    curl -X POST -F "ident=$ident" -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
+    curl -s -X POST -F "ident=$ident" -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url >/dev/null
 fi
