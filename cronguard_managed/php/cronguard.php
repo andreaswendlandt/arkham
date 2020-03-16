@@ -21,9 +21,7 @@ if ($action == 'start') {
         die("no data retrieved\n");
     }
     $token_to_check_before = new ValidateToken($_POST['token']);
-    var_dump($token_to_check_before);
     $bool_before = $token_to_check_before->{'check_token'}();
-    var_dump($bool_before);
     if ($bool_before){
         $stmt = $conn->prepare("INSERT INTO job_test (ident, token, host, start_time, command, action)
         VALUES (?, ?, ?, ?, ?, ?)");
@@ -49,9 +47,7 @@ elseif ($action == "finished") {
         die("no data retrieved\n");
     }
     $token_to_check_after = new ValidateToken($_POST['token']);
-    var_dump($token_to_check_after);
     $bool_after = $token_to_check_after->{'check_token'}();
-    var_dump($bool_after);
     if ($bool_after){
         $stmt = $conn->prepare("UPDATE job_test SET end_time = ?, action = ?, result = ? WHERE ident = ?");
         $stmt->bind_param("isss", $end_time, $action, $result, $ident);
