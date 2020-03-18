@@ -61,7 +61,7 @@ stop_cronguard() {
     fi
     echo "Stopping $daemon"
     log "Stopping $daemon"
-    init_pid=$(ps -ef | grep cronguard | grep -v grep | awk '$3 ~ /1/ {print $2}')
+    init_pid=$(ps -ef | grep cronguard | egrep -v 'grep|mysql' | awk '$3 ~ /1/ {print $2}')
     echo "$init_pid" > "$init_pidfile"
     if [ -s $pidfile ]; then
         kill -15 $(cat "$pidfile") >/dev/null 2>&1
@@ -142,9 +142,10 @@ cronguard() {
                 start_time=$(mysql -u $db_user -p$db_password $db -e"SELECT start_time FROM $table WHERE ident =\"$4\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
 	        running_since=$((current_time-start_time))
                 if [ $running_since -ge 86400 ]; then
+                log "$4 will be sent"
                 long_running_command=$(mysql -u $db_user -p$db_password $db -e"SELECT command FROM $table WHERE ident =\"$4\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
                 mail_to=$(mysql -u $db_user -p$db_password $db -e"SELECT email FROM token_mail WHERE token =\"$1\"" 2>&1 | grep -v 'Using a password' | tail -n +2)
-                    if send_mail "Long running Cronjob on $3" "This Cronjob is running longer than one day($running_since seconds): \"$long_running_command\""; then
+                    if send_mail "Long running Cronjob on $3" "This Cronjob is running longer than one day($running_since seconds): \"$long_running_command\"" $mail_to; then
                         mysql -u $db_user -p$db_password $db -e"DELETE FROM $table WHERE ident = \"$4\"" 2>&1 | grep -v 'Using a password'
 	            fi
                 fi
