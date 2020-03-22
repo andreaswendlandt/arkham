@@ -45,11 +45,11 @@
       </div>
     <h4 class="ui top attached blue inverted header">What will be done here</h4>
     <div class="ui segment">
-      Here you can download the two components you need for interacting with the cronguard application(although the token.inc.sh is just an include file with a variable in). The file token.inc.sh <strong>MUST BE</strong> located under /opt/cronguard/, the cron_wrapper.sh can be run from anywhere - you can put the token.inc.sh wherever you want as well but then you need to adjust the cron_wrapper.sh - the 37th line:<br />
+      Here you can download the two components you need to be able to interact with the cronguard application(although one of these components - the token.inc.sh is just an include file with a variable inside). The file token.inc.sh <strong>MUST BE</strong> located in the directory /opt/cronguard/, the cron_wrapper.sh can be executed from anywhere - you can also put the token.inc.sh wherever you want but then you need to adjust the cron_wrapper.sh - the 37th line:<br />
       ...<br />
       if ! source /opt/cronguard/token.inc.sh 2>/dev/null; then<br />
       ...<br />
-      Under the two download links you find the md5sum for each file. The only thing you need to do after downloading them and placing them to their desired location is to put the token you generated here <a href="https://cronguard.ddns.net/generate_token.php">Generate Token</a> into the token.inc.sh file and you can run cronjobs like this:<br />
+      Under the two download links you find the md5sum for each file. The only thing you need to do after downloading them and placing them to their intended locations is to put the token you generated here <a href="https://cronguard.ddns.net/generate_token.php">Generate Token</a> into the token.inc.sh file and you can run cronjobs like this:<br />
       <br />
       15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command" <br />
       15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
