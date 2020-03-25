@@ -73,8 +73,8 @@
       <h4 class="ui top blue attached inverted header">About the author</h4>
       <div class="ui segment">
         <img class="ui small right floated image" src="icke.jpeg">
-        My name is andreas, i'm a linux administrator/system engineer and open source enthusiast. I live in berlin and worked here for several        companies<br />
-        startups as well as public service and established company composite. More about me and what i do on the following social media buttons and about cronguard on github and dockerhub.<br />
+        My name is andreas, i'm a linux administrator/system engineer and open source enthusiast. I live in berlin and worked here for various companies.<br />
+        Startups as well as public service and established companies. More about me and what i do on the following social media buttons and about cronguard on github and dockerhub.<br />
         <a href="https://de.linkedin.com/in/andreas-wendlandt-231a3332">
           <button class="ui icon button">
             <i class="linkedin icon"></i>
