@@ -46,10 +46,10 @@
       </div>
       <h4 class="ui top blue attached inverted header">What it is</h4>
       <div class="ui segment">
-        Cronguard is designed to evaluate cronjobs, one might say:"cron can do this this on his own" - yes and no. Yes cron can do that but it is error-prone, at least for piped commands, consider you execute the following: <i>true | false | true && echo "success" || else echo "fail"</i><br/ >
-        Guess what will be echoed here, correct - success and with that the logic of the results for cronjobs is wrong. The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable - <i>${PIPESTATUS[*]}</i> - and the bash(and thus cron) uses always the last one as the "result".<br />
+        Cronguard was developed to evaluate cronjobs, you could say: "cron can do this alone" - yes and no. Yes cron can do that but it is prone to errors, at least for piped commands, imagine you execute the following: <i>true | false | true && echo "success" || else echo "fail"</i><br/ >
+        Guess what is the output here - success and with that the logic of the results for cronjobs is wrong. The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable - <i>${PIPESTATUS[*]}</i> - and the bash(and thus cron) uses always the last one as the "result".<br />
         The second purpose of Cronguard is to get rid of these annoying mails you have to check as an admin every day: <i>'Yes the cronjob XY on Server Z was successful...'</i><br />
-        Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy) work. Cronguard will only send mails in case of failed cronjobs and cronjobs that are running longer than one day. About successfully executed ones Cronguard does not care about.
+        Instead of disabling the mailing functionality from cron let Cronguard do the (dirty and lazy) work. Cronguard will only send mails in case of failed cronjobs and cronjobs that run longer than one day. About successfully executed ones Cronguard does not care.
       </div>
       <h4 class="ui top blue attached inverted header">How it works</h4>
       <div class="ui segment">
@@ -68,7 +68,7 @@
       </div>
       <h4 class="ui top blue attached inverted header">What does it cost</h4>
       <div class="ui segment">
-        NOTHING, using this service is absolutely and 100% for free! If you have a bad conscience about not paying for it - please support your       local animal shelter. 
+        NOTHING, using this service is absolutely and 100% for free! If you have a bad conscience about not paying for it - please support your local animal shelter. 
       </div>
       <h4 class="ui top blue attached inverted header">About the author</h4>
       <div class="ui segment">
