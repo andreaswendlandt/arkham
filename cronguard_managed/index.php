@@ -46,21 +46,21 @@
       </div>
       <h4 class="ui top blue attached inverted header">What it is</h4>
       <div class="ui segment">
-        Cronguard is designed to evaluate cronjobs, one might say:"cron can do this this on his own" - yes and no. Yes cron can do that but it is error-prone, at least for piped commands, consider you execute the following: <i>true | false | true && echo "success" || else echo "fail"</i><br/ >
-        Guess what will be echoed here, correct - success and with that the logic of the results for cronjobs is wrong. The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable - <i>${PIPESTATUS[*]}</i> - and the bash(and thus cron) uses always the last one as the "result".<br />
+        Cronguard was developed to evaluate cronjobs, you could say: "cron can do this alone" - yes and no. Yes cron can do that but it is prone to errors, at least for piped commands, imagine you execute the following: <i>true | false | true && echo "success" || else echo "fail"</i><br/ >
+        Guess what is the output here - success and with that the logic of the results for cronjobs is wrong. The reason is that every command of a piped command chain has its own return value which is stored in a shell array variable - <i>${PIPESTATUS[*]}</i> - and the bash(and thus cron) uses always the last one as the "result".<br />
         The second purpose of Cronguard is to get rid of these annoying mails you have to check as an admin every day: <i>'Yes the cronjob XY on Server Z was successful...'</i><br />
-        Instead of disabling the mailing from cron let Cronguard do the (dirty and lazy) work. Cronguard will only send mails in case of failed cronjobs and cronjobs that are running longer than one day. About successfully executed ones Cronguard does not care about.
+        Instead of disabling the mailing functionality from cron let Cronguard do the (dirty and lazy) work. Cronguard will only send mails in case of failed cronjobs and cronjobs that run longer than one day. About successfully executed ones Cronguard does not care.
       </div>
       <h4 class="ui top blue attached inverted header">How it works</h4>
       <div class="ui segment">
-        You let your cronjob execute by the cron_wrapper.sh script, just put the script in front of your cronjob the following way: <br /><br />
+        You let the cron_wrapper.sh script execute your cronjobs, just put the script in front of your cronjob the following way: <br /><br />
         15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command" <br />
         15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "command | command | command" <br />
         15  3  *  *  *  /opt/cronguard/cron_wrapper.sh "script"<br /><br />
-        It will send the following data(token, ident, host, start time, command and action) via curl to the cronguard server which writes them to a database, executes the cronjob and checks if the command(s)/script were successfully executed and makes then a second curl to the server with the result(fail or success). On the server runs a daemon which checks once per minute for new database entries, entries with a 'success' as a result will just be deleted, entries with a 'fail' as a result will be send per mail - and then deleted, if there is no result(NULL) and the cronjob is running longer than one day(86400 seconds) a mail will be send as well and the entry will be deleted. To get it working generate a token, store the token in /opt/cronguard/token.inc.sh (this is the location where the wrapper expects it), download the wrapper script cron_wrapper.sh and you can start. Beside generating a token you can - if you are not sure if your token is valid - validate your token and of course remove your token(and your email address). If you lost or forgot your token you can on the dedicated page let your token sent to you. This application has also a simple api, you can check if there are any entries(for your token), you can call this api like this:<br />
+        It will send the following data(token, ident, host, start time, command and action) via curl to the cronguard server which writes them to a database, executes the cronjob and checks if the command(s)/script were executed successfully and makes then a second curl to the server with the result(fail or success). On the server runs a daemon which checks once per minute if there are new database entries, entries with a 'success' as a result are just deleted, entries with a 'fail' as a result are sent by mail - and then deleted, if there is no result(NULL) and the cronjob runs longer than one day(86400 seconds) a mail is also sent and the entry is deleted. In order to get it to work generate a token, store the token in /opt/cronguard/token.inc.sh (this is the location where the wrapper expects it), download the wrapper script cron_wrapper.sh and you can start. Besides the generating of token you can - if you are not sure if your token is valid - validate your token and of course delete your token(and your email address). If you have forgotten or lost your token you can have your token sent to you on the corresponding page. This application also has a simple api, you can check if there are entries(for your token), you can call this api as follows:<br />
         https://cronguard.ddns.net/cronguard_api.php?method=api&token=`your_token`<br />
         Some further and additional information can be found here: <a href="https://github.com/andreaswendlandt/gotham/tree/master/cronguard">Cronguard on GitHub</a><br />
-        In case you want to manage cronguard on your own you can download everything you need for that(including .deb packages) from the              GitHub link. Even some minimally invasive testing is possible as there is a docker image on DockerHub: <a href="https://hub.docker.com/r/andreaswendlandt/cronguard">Cronguard on Docker Hub</a><br />
+        If you want to host cronguard yourself you can download everything you need from the GitHub link (including .deb packages). Even a minimal invasive testing is possible as there is a docker image on DockerHub: <a href="https://hub.docker.com/r/andreaswendlandt/cronguard">Cronguard on Docker Hub</a><br />
       </div>
       <h4 class="ui top blue attached inverted header">What do i need</h4>
       <div class="ui segment">
@@ -68,13 +68,13 @@
       </div>
       <h4 class="ui top blue attached inverted header">What does it cost</h4>
       <div class="ui segment">
-        NOTHING, using this service is absolutely and 100% for free! If you have a bad conscience about not paying for it - please support your       local animal shelter. 
+        NOTHING, using this service is absolutely and 100% for free! If you have a bad conscience about not paying for it - please support your local animal shelter. 
       </div>
       <h4 class="ui top blue attached inverted header">About the author</h4>
       <div class="ui segment">
         <img class="ui small right floated image" src="icke.jpeg">
-        My name is andreas, i'm a linux administrator/system engineer and open source enthusiast. I live in berlin and worked here for several        companies<br />
-        startups as well as public service and established company composite. More about me and what i do on the following social media buttons and about cronguard on github and dockerhub.<br />
+        My name is andreas, i'm a linux administrator/system engineer and open source enthusiast. I live in berlin and worked here for various companies.<br />
+        Startups as well as public service and established companies. More about me and what i do on the following social media buttons and about cronguard on github and dockerhub.<br />
         <a href="https://de.linkedin.com/in/andreas-wendlandt-231a3332">
           <button class="ui icon button">
             <i class="linkedin icon"></i>

@@ -45,7 +45,7 @@
       </div>
     <h4 class="ui top attached blue inverted header">What will be done here</h4>
     <div class="ui segment">
-      Here you can let the application send your token to you in case you forgot or lost it. Just type in your email address and the token will send to you - provided that your email address is associated to a token.
+      Here you can have the application send you your token if you have forgotten or lost it. Just enter your email address and the token will sent to you - provided that your email address is associated to a token.
     </div>
     <form class="ui form" method="POST" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
       <div class="fields">
