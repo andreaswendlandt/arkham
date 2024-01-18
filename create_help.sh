@@ -1,5 +1,5 @@
 #!/bin/bash
-# author: guerillatux
+# author: andreaswendlandt
 # last modified: 1.9.2017
 # desc: some crazy-fancy-awesome stuff
 

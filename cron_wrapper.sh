@@ -1,5 +1,5 @@
 #!/bin/bash
-# author: guerillatux
+# author: andreaswendlandt
 # desc: simple wrapper script for cronjobs which have piped commands
 # desc: it notifies the cronguard server via curl the start-/endtime and the result of a script 
 # last modified: 12.08.2018
